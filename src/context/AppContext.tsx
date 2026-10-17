@@ -30,6 +30,7 @@ export type AppAction =
   | { type: 'SET_MERCHANT_EVIDENCE'; payload: MerchantEvidence | null }
   | { type: 'SET_MERCHANT_LANGUAGE'; payload: MerchantLanguage }
   | { type: 'ADJUDICATE_CASE'; payload: { decision: 'approved' | 'rejected'; notes?: string } }
+  | { type: 'UPDATE_TRANSACTION_AMOUNT'; payload: number }
   | { type: 'RESET_RESULTS' };
 
 // ==========================================
@@ -50,6 +51,7 @@ export interface AppContextValue extends AppState {
   submitEvidence: (evidence?: MerchantEvidence) => void;
   setMerchantEvidence: (evidence: MerchantEvidence | null) => void;
   setMerchantLanguage: (lang: MerchantLanguage) => void;
+  updateTransactionAmount: (amount: number) => void;
   approveCase: (notes?: string) => void;
   rejectCase: (notes?: string) => void;
   resetResults: () => void;
@@ -261,6 +263,20 @@ export function appReducer(state: AppState, action: AppAction): AppState {
       };
     }
 
+    case 'UPDATE_TRANSACTION_AMOUNT': {
+      if (!state.currentScenario) return state;
+      return {
+        ...state,
+        currentScenario: {
+          ...state.currentScenario,
+          transaction: {
+            ...state.currentScenario.transaction,
+            amount: action.payload,
+          },
+        },
+      };
+    }
+
     case 'RESET_RESULTS': {
       const resetScenario = state.currentScenario
         ? {
@@ -377,6 +393,10 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     dispatch({ type: 'RESET_RESULTS' });
   }, []);
 
+  const updateTransactionAmount = useCallback((amount: number) => {
+    dispatch({ type: 'UPDATE_TRANSACTION_AMOUNT', payload: amount });
+  }, []);
+
   // Comprehensive AI & CLS Pipeline runner
   const runAuditPipeline = useCallback(
     async (customEvidence?: MerchantEvidence) => {
@@ -491,6 +511,7 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     submitEvidence,
     setMerchantEvidence,
     setMerchantLanguage,
+    updateTransactionAmount,
     approveCase,
     rejectCase,
     resetResults,

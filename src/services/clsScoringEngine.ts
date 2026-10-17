@@ -25,9 +25,9 @@ export function calculateCLS(
   if (overrideValues && overrideValues.totalScore !== undefined) {
     const total = Math.min(900, Math.max(0, overrideValues.totalScore));
     return {
-      graphVelocityScore: overrideValues.graphVelocityScore ?? 260,
-      geminiMultimodalScore: overrideValues.geminiMultimodalScore ?? 335,
-      physicalLivelihoodScore: overrideValues.physicalLivelihoodScore ?? 235,
+      graphVelocityScore: overrideValues.graphVelocityScore ?? 275,
+      geminiMultimodalScore: overrideValues.geminiMultimodalScore ?? 345,
+      physicalLivelihoodScore: overrideValues.physicalLivelihoodScore ?? 245,
       totalScore: total,
       riskLevel: overrideValues.riskLevel ?? getRiskLevel(total),
       recommendation: overrideValues.recommendation ?? getRecommendation(total),
@@ -67,10 +67,10 @@ export function calculateCLS(
     ticketScore = 92;
     holdingScore = 88;
   } else {
-    // Genuine retail pharmacy / grocery in India
-    fanInScore = 90;
-    ticketScore = 88;
-    holdingScore = 85;
+    // Genuine retail pharmacy / grocery in India (95 + 90 + 90 = 275)
+    fanInScore = 95;
+    ticketScore = 90;
+    holdingScore = 90;
   }
 
   // Check historical overrides if available
@@ -138,7 +138,8 @@ export function calculateCLS(
     billSeqScore = 82;
     disputeScore = 84;
   } else {
-    inventoryScore = 76;
+    // Genuine retail pharmacy / grocery in India (82 + 81 + 82 = 245)
+    inventoryScore = 82;
     billSeqScore = 81;
     disputeScore = 82;
   }

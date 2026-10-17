@@ -285,7 +285,7 @@ export async function simulateGeminiAudit(
       amount_match_boolean: true,
       visual_authenticity_notes:
         'Physical carbon-copy duplicate bill book verified. Legitimate Drug License KA-UD-2019-04521 clearly legible. Realistic paper grain, carbon ink bleed-through, and sequential serial numbering (#409) confirmed.',
-      ai_evidence_score: 335,
+      ai_evidence_score: 345,
       discrepancy_flags: [],
       regulatory_compliance_memo:
         'Under RBI Master Directions (Sept 2026 Draft on Cyber Lien Mitigation, Section 7.4), transaction represents genuine downstream micro-merchant commerce with physical proof-of-sale. Merchant is an innocent Layer-3 recipient in a fan-out mule tree. Recommended disposition: Immediate cyber lien lift on secondary account hold.',
@@ -302,7 +302,7 @@ export async function simulateGeminiAudit(
       amount_match_boolean: true,
       visual_authenticity_notes:
         'Standard thermal POS receipt matching Maxwell Food Centre merchant terminal #01-45. UEN/GST registration number valid. Micro-dot thermal printer artifacts and timestamps consistent with hawker stall rush hour transactions.',
-      ai_evidence_score: 325,
+      ai_evidence_score: 350,
       discrepancy_flags: [],
       regulatory_compliance_memo:
         'Assessed under MAS Shared Responsibility Framework (SRF) for digital payment fraud. Merchant demonstrates verifiable commercial proof of physical goods delivered with matching PayNow UEN payload. Recommended disposition: Full fund clearance and lien dismissal.',

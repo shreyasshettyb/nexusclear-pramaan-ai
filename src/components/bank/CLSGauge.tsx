@@ -71,9 +71,9 @@ export const CLSGauge: React.FC<CLSGaugeProps> = ({
   const scoreRatio = Math.min(1, Math.max(0, animatedScore / 900));
   const strokeDashoffset = circumference * (1 - scoreRatio);
 
-  const graphScore = breakdown?.graphVelocityScore ?? (score < 500 ? 45 : 265);
-  const geminiScore = breakdown?.geminiMultimodalScore ?? (score < 500 ? 35 : 340);
-  const physicalScore = breakdown?.physicalLivelihoodScore ?? (score < 500 ? 45 : 240);
+  const graphScore = breakdown?.graphVelocityScore ?? (score < 500 ? 45 : 275);
+  const geminiScore = breakdown?.geminiMultimodalScore ?? (score < 500 ? 35 : 345);
+  const physicalScore = breakdown?.physicalLivelihoodScore ?? (score < 500 ? 45 : 245);
 
   return (
     <div className="rounded-3xl bg-[#1e1f20] border border-[#333538] p-4 sm:p-6 shadow-sm flex flex-col gap-4 text-[#e3e3e3]">

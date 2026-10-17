@@ -60,6 +60,7 @@ export const MerchantApp: React.FC<MerchantAppProps> = ({
     merchantLanguage,
     setMerchantLanguage,
     adjudicationStatus,
+    updateTransactionAmount,
   } = useAppContext();
 
   const t = TRANSLATIONS[merchantLanguage] || TRANSLATIONS.en;
@@ -70,6 +71,9 @@ export const MerchantApp: React.FC<MerchantAppProps> = ({
   const [shopPhoto, setShopPhoto] = useState<string>('');
   const [activeModalImage, setActiveModalImage] = useState<string | null>(null);
 
+  const [isCustomMode, setIsCustomMode] = useState<boolean>(false);
+  const [customAmount, setCustomAmount] = useState<string>('');
+
   const [isRecording, setIsRecording] = useState<boolean>(false);
   const [recordingDuration, setRecordingDuration] = useState<number>(0);
   const [liveWaveform, setLiveWaveform] = useState<number[]>([]);
@@ -78,6 +82,7 @@ export const MerchantApp: React.FC<MerchantAppProps> = ({
   const [recordingError, setRecordingError] = useState<string | null>(null);
 
   const receiptFileInputRef = useRef<HTMLInputElement | null>(null);
+  const customReceiptInputRef = useRef<HTMLInputElement | null>(null);
   const shopPhotoFileInputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
@@ -184,7 +189,34 @@ export const MerchantApp: React.FC<MerchantAppProps> = ({
     const reader = new FileReader();
     reader.onload = (uploadEvent) => {
       const base64Url = uploadEvent.target?.result as string;
-      if (base64Url) setReceiptImage(base64Url);
+      if (base64Url) {
+        setReceiptImage(base64Url);
+        setIsCustomMode(true);
+      }
+    };
+    reader.readAsDataURL(file);
+  };
+
+  const handleCustomReceiptUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    const reader = new FileReader();
+    reader.onload = (uploadEvent) => {
+      const base64Url = uploadEvent.target?.result as string;
+      if (base64Url) {
+        setReceiptImage(base64Url);
+        setIsCustomMode(true);
+        if (
+          !statementText ||
+          statementText.includes('baby formula') ||
+          statementText.includes('chicken rice') ||
+          statementText.includes('brass fittings')
+        ) {
+          setStatementText(
+            'Customer paid for retail purchase with attached receipt. Please inspect the commercial bill and unblock account.'
+          );
+        }
+      }
     };
     reader.readAsDataURL(file);
   };
@@ -216,6 +248,8 @@ export const MerchantApp: React.FC<MerchantAppProps> = ({
   };
 
   const handleSelectScenario = (id: string) => {
+    setIsCustomMode(false);
+    setCustomAmount('');
     const found = DEMO_SCENARIOS.find((s) => s.id === id);
     if (found) loadScenario(found);
   };
@@ -274,8 +308,7 @@ export const MerchantApp: React.FC<MerchantAppProps> = ({
         {/* ========================================================= */}
         <div className="flex items-center gap-1.5 overflow-x-auto pb-1 custom-scrollbar">
           {DEMO_SCENARIOS.map((sc) => {
-            const isActive = currentScenario?.id === sc.id;
-            const isMule = sc.id === 'rajesh-trading';
+            const isActive = !isCustomMode && currentScenario?.id === sc.id;
             return (
               <button
                 key={sc.id}
@@ -295,6 +328,28 @@ export const MerchantApp: React.FC<MerchantAppProps> = ({
               </button>
             );
           })}
+
+          {/* Upload Custom Receipt Button for Live Judge Testing */}
+          <button
+            type="button"
+            onClick={() => customReceiptInputRef.current?.click()}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium shrink-0 transition-all cursor-pointer border ${
+              isCustomMode
+                ? 'bg-[#8ab4f8] text-[#002b4f] border-[#8ab4f8] font-semibold'
+                : 'bg-[#131314] border-[#2d2f31] text-[#9aa0a6] hover:text-white hover:border-[#3c4043]'
+            }`}
+            title="Upload any custom receipt image to test unscripted multimodal OCR & verification"
+          >
+            <Camera className="h-3.5 w-3.5 text-[#8ab4f8]" />
+            <span>Upload Custom Receipt</span>
+          </button>
+          <input
+            ref={customReceiptInputRef}
+            type="file"
+            accept="image/*"
+            onChange={handleCustomReceiptUpload}
+            className="hidden"
+          />
         </div>
 
         {/* ========================================================= */}
@@ -334,17 +389,43 @@ export const MerchantApp: React.FC<MerchantAppProps> = ({
         ) : (
           <div className="rounded-2xl bg-[#131314] p-4 flex flex-col gap-2">
             <div className="flex items-center justify-between">
-              <span className="text-xs text-[#9aa0a6]">{t.frozenAmount}</span>
+              <span className="text-xs text-[#9aa0a6]">
+                {isCustomMode ? 'Flagged Amount (Editable for Test)' : t.frozenAmount}
+              </span>
               <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#3b2f0a] text-[#fdd663] text-[11px] font-medium">
                 <AlertTriangle className="h-3 w-3" />
-                {t.holdLayer}
+                {isCustomMode ? 'Custom Test Hold' : t.holdLayer}
               </span>
             </div>
-            <div className="text-2xl sm:text-3xl font-bold font-mono text-white">
-              {currentScenario ? formatCurrency(currentScenario.transaction.amount, currentJurisdiction) : '₹0'}
+            <div className="flex items-center gap-2">
+              <span className="text-2xl sm:text-3xl font-bold font-mono text-white">
+                {jurisdictionConfig.currencySymbol}
+              </span>
+              <input
+                type="number"
+                value={customAmount !== '' ? customAmount : (currentScenario?.transaction.amount ?? 1450)}
+                onChange={(e) => {
+                  const val = e.target.value;
+                  setCustomAmount(val);
+                  const num = parseFloat(val);
+                  if (!isNaN(num) && num > 0) {
+                    updateTransactionAmount(num);
+                  }
+                }}
+                className="text-2xl sm:text-3xl font-bold font-mono text-white bg-transparent border-b border-[#333538] hover:border-[#8ab4f8] focus:border-[#8ab4f8] focus:outline-none w-36 px-0.5"
+                placeholder="Amount"
+                title="Edit amount to test amount match or mismatch with custom receipt"
+              />
+              {isCustomMode && (
+                <span className="text-[10px] font-medium text-[#8ab4f8] bg-[#1b3a5b] px-2 py-0.5 rounded-full">
+                  Custom Mode
+                </span>
+              )}
             </div>
             <p className="text-xs text-[#9aa0a6] leading-relaxed">
-              {t.freezeAlertDesc}
+              {isCustomMode
+                ? 'Custom receipt loaded. Edit the amount above to test how Gemini detects matching vs mismatched bills!'
+                : t.freezeAlertDesc}
             </p>
           </div>
         )}

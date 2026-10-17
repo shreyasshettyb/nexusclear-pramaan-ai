@@ -182,7 +182,7 @@ flowchart LR
   - Receipt: Authentic carbon-copy invoice #409 (₹1,450, 16:14 IST, Drug License KA-UD-2019-04521).
   - Physical Proof: Pharmacy interior shelves with green cross.
 - **Audit Findings:** Amount matches perfectly (`₹1,450 = ₹1,450`). Time delta is under 60 seconds. Natural 6-month retail curve (30 daily transactions).
-- **CLS Outcome:** **865 / 900** (Velocity: 265, Gemini Multimodal: 340, Livelihood: 240).
+- **CLS Outcome:** **865 / 900** (Velocity: 275, Gemini Multimodal: 345, Livelihood: 245).
 - **Statutory Decision:** **Approve & Lift Hold**. Unblocks merchant immediately under RBI Rule 14(b).
 
 ### Scenario 2: 🍗 Innocent Singapore Hawker Stall (Uncle Tan Hainanese Chicken Rice)
@@ -281,11 +281,12 @@ npm run dev
    - Click the **Reset button (`↺`)**.
    - Now click **"Force Approve (Override)"**. Notice how the system immediately unblocks the funds under Officer Discretion without annoying popups, embedding the override note into the clearance docket.
 
-### Step 5: Test Real Gemini 2.5 Flash API (Optional)
+### Step 5: Test Real Gemini 2.5 Flash API & Custom Receipt Upload
 1. In the top navbar, click the **⚙️ Settings** icon.
 2. Enter your free **Gemini API key** from Google AI Studio.
 3. The badge updates to **🟢 Gemini 2.5 Flash**.
-4. Submissions will now be processed directly through Google's cloud API!
+4. **📷 Test Custom Receipt Upload:** Alongside the 3 pre-loaded scenario chips (`Ramesh`, `Uncle Tan`, `Rajesh`), click **"📷 Upload Custom Receipt"** to upload any receipt or invoice image from your computer. You can edit the flagged transaction amount directly in the merchant card to test how Gemini 2.5 Flash detects matching vs mismatched bills, extracts line items via neural OCR, and calculates unscripted CLS scores live!
+5. Submissions will now be processed directly through Google's cloud API!
 
 ---
 
@@ -305,7 +306,7 @@ npm run dev
 ## 10. Repository File & Codebase Structure
 
 ```
-c:\Users\shreyas\Desktop\Projects\AIBuilderCup\
+nexusclear-pramaan-ai/
 ├── index.html                               # HTML5 entry with mobile viewport & Google fonts
 ├── package.json                             # Dependencies (@google/genai, lucide-react, canvas-confetti)
 ├── vite.config.ts                           # Vite configuration with @tailwindcss/vite

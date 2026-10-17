@@ -411,9 +411,9 @@ export const DEMO_SCENARIOS: DemoScenario[] = [
       uploadedAt: '2026-10-16T09:12:00+05:30',
     },
     expectedCLS: {
-      graphVelocityScore: 265,
-      geminiMultimodalScore: 350,
-      physicalLivelihoodScore: 250,
+      graphVelocityScore: 275,
+      geminiMultimodalScore: 345,
+      physicalLivelihoodScore: 245,
       totalScore: 865,
       riskLevel: 'low',
       recommendation: 'lift_hold',
@@ -434,7 +434,7 @@ export const DEMO_SCENARIOS: DemoScenario[] = [
       amount_match_boolean: true,
       visual_authenticity_notes:
         'Marg POS bill #409 matches ₹1,450.00 exactly. Invoice timestamp is 38 seconds prior to UPI clearing webhook credit. GSTIN 29AABCR4419P1Z8 is active on GSTN portal and matches Koramangala pin code. Drug license numbers match state pharmacy registrar records.',
-      ai_evidence_score: 350,
+      ai_evidence_score: 345,
       discrepancy_flags: [],
       regulatory_compliance_memo:
         'Full compliance with Draft RBI Master Direction on Cyber Lien Harmonization (Sept 2026, Section 14b). Verified bona fide micro-merchant livelihood impact. Recommend immediate administrative unfreeze of Canara Bank A/c **1823.',
