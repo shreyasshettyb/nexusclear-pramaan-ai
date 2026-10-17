@@ -69,28 +69,29 @@ export const SplitLayout: React.FC<SplitLayoutProps> = ({
   }, [isDragging]);
 
   return (
-    <div className="flex flex-col h-[calc(100vh-4rem)] w-full overflow-hidden bg-[#111318]">
-      
-      {/* Mobile Tab Pill Controls (< md) */}
-      <div className="flex md:hidden items-center justify-center p-2 bg-[#191c20] border-b border-[#2d3036] shrink-0">
-        <div className="flex w-full max-w-xs rounded-full bg-[#111318] p-1 border border-[#2d3036]">
+    <div className="flex flex-col h-[calc(100vh-3.5rem)] w-full overflow-hidden bg-[#131314]">
+      {/* Mobile Segmented Switcher (< md) */}
+      <div className="flex md:hidden items-center justify-center p-2 bg-[#1e1f20] border-b border-[#2d2f31] shrink-0">
+        <div className="flex w-full max-w-xs rounded-full bg-[#131314] p-1 border border-[#333538]">
           <button
+            type="button"
             onClick={() => setMobileTab('merchant')}
             className={`flex-1 flex items-center justify-center gap-1.5 py-1.5 rounded-full text-xs font-medium transition-all cursor-pointer ${
               mobileTab === 'merchant'
-                ? 'bg-[#004a77] text-[#d1e4ff] font-semibold'
-                : 'text-[#c4c6d0]'
+                ? 'bg-[#8ab4f8] text-[#002b4f] font-semibold'
+                : 'text-[#9aa0a6]'
             }`}
           >
             <Smartphone className="h-3.5 w-3.5" />
             <span>Merchant</span>
           </button>
           <button
+            type="button"
             onClick={() => setMobileTab('bank')}
             className={`flex-1 flex items-center justify-center gap-1.5 py-1.5 rounded-full text-xs font-medium transition-all cursor-pointer ${
               mobileTab === 'bank'
-                ? 'bg-[#004a77] text-[#d1e4ff] font-semibold'
-                : 'text-[#c4c6d0]'
+                ? 'bg-[#8ab4f8] text-[#002b4f] font-semibold'
+                : 'text-[#9aa0a6]'
             }`}
           >
             <Monitor className="h-3.5 w-3.5" />
@@ -104,53 +105,46 @@ export const SplitLayout: React.FC<SplitLayoutProps> = ({
         ref={containerRef}
         className="relative flex-1 flex flex-col md:flex-row w-full h-full overflow-hidden p-3 gap-0"
       >
-        {/* Left Panel: Merchant Phone View */}
+        {/* Left Panel: Merchant App */}
         <div
           style={{ width: `${splitRatio}%` }}
-          className={`h-full overflow-y-auto custom-scrollbar transition-[width] duration-75 flex flex-col items-center justify-start pr-0 md:pr-1 ${
+          className={`h-full overflow-y-auto custom-scrollbar flex flex-col items-center justify-start pr-0 md:pr-2 ${
             mobileTab === 'merchant' ? 'flex w-full md:w-auto' : 'hidden md:flex'
           }`}
         >
           {leftPanel}
         </div>
 
-        {/* Minimalist Material Resizer Handle */}
+        {/* Minimalist Resizer Handle */}
         <div
           onMouseDown={handleMouseDown}
           onTouchStart={handleTouchStart}
-          className={`hidden md:flex relative w-3 items-center justify-center cursor-col-resize group z-30 select-none shrink-0 ${
-            isDragging ? 'opacity-100' : 'opacity-60 hover:opacity-100'
+          className={`hidden md:flex relative w-2.5 items-center justify-center cursor-col-resize group z-30 select-none shrink-0 ${
+            isDragging ? 'opacity-100' : 'opacity-40 hover:opacity-100'
           }`}
           title="Drag to resize panels"
         >
           <div
             className={`h-full w-[1px] transition-colors ${
-              isDragging ? 'bg-[#8ab4f8]' : 'bg-[#2d3036] group-hover:bg-[#8ab4f8]'
+              isDragging ? 'bg-[#8ab4f8]' : 'bg-[#333538] group-hover:bg-[#8ab4f8]'
             }`}
           />
           <div
-            className={`absolute flex h-7 w-4 items-center justify-center rounded-full border shadow transition-all ${
-              isDragging
-                ? 'bg-[#8ab4f8] border-[#a8c7fa] text-[#003258]'
-                : 'bg-[#1e2025] border-[#3c4048] text-[#9aa0a6] group-hover:text-white'
-            }`}
+            className={`absolute flex h-5 w-3 items-center justify-center rounded-full border border-[#333538] bg-[#1e1f20] text-[#9aa0a6] group-hover:text-white transition-all`}
           >
-            <GripVertical className="h-3 w-3" />
+            <GripVertical className="h-2 w-2" />
           </div>
         </div>
 
-        {/* Right Panel: Bank Console View */}
+        {/* Right Panel: Bank Console */}
         <div
           style={{ width: `${100 - splitRatio}%` }}
-          className={`h-full overflow-hidden transition-[width] duration-75 flex flex-col pl-0 md:pl-1 ${
+          className={`h-full overflow-y-auto custom-scrollbar flex flex-col pl-0 md:pl-2 ${
             mobileTab === 'bank' ? 'flex w-full md:w-auto' : 'hidden md:flex'
           }`}
         >
-          <div className="w-full h-full rounded-2xl bg-[#191c20] border border-[#2d3036] overflow-y-auto flex flex-col p-2 sm:p-4 custom-scrollbar">
-            {rightPanel}
-          </div>
+          {rightPanel}
         </div>
-
       </div>
     </div>
   );

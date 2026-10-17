@@ -133,9 +133,18 @@ export function appReducer(state: AppState, action: AppAction): AppState {
 
     case 'LOAD_SCENARIO': {
       const scenario = action.payload;
+      // Deep copy hopChain and transaction so modifications don't mutate template
+      const clonedTransaction = {
+        ...scenario.transaction,
+        status: 'frozen' as const,
+        hopChain: scenario.transaction.hopChain.map((node) => ({ ...node })),
+      };
       return {
         ...state,
-        currentScenario: scenario,
+        currentScenario: {
+          ...scenario,
+          transaction: clonedTransaction,
+        },
         currentJurisdiction: scenario.jurisdiction,
         merchantEvidence: { ...scenario.evidence },
         evidenceSubmitted: false,
@@ -252,9 +261,23 @@ export function appReducer(state: AppState, action: AppAction): AppState {
       };
     }
 
-    case 'RESET_RESULTS':
+    case 'RESET_RESULTS': {
+      const resetScenario = state.currentScenario
+        ? {
+            ...state.currentScenario,
+            transaction: {
+              ...state.currentScenario.transaction,
+              status: 'frozen' as const,
+              hopChain: state.currentScenario.transaction.hopChain.map((node) =>
+                node.type === 'merchant' ? { ...node, status: 'under_review' as const } : node
+              ),
+            },
+          }
+        : null;
+
       return {
         ...state,
+        currentScenario: resetScenario,
         clsResult: null,
         geminiResult: null,
         evidenceSubmitted: false,
@@ -264,6 +287,7 @@ export function appReducer(state: AppState, action: AppAction): AppState {
         adjudicationNotes: undefined,
         adjudicatedAt: undefined,
       };
+    }
 
     default:
       return state;

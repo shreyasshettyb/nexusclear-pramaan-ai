@@ -1,50 +1,45 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Roboto:wght@300;400;500;700&family=Roboto+Mono:wght@400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Roboto:wght@400;500;700&family=Roboto+Mono:wght@400;500&display=swap');
 @import "tailwindcss";
 
 @custom-variant dark (&:where(.dark, .dark *));
 
 :root {
-  /* Google Material 3 (Material You) Dark Scheme */
-  --md-surface: #111318;
-  --md-surface-dim: #0d0f12;
-  --md-surface-bright: #37393e;
-  --md-surface-container-lowest: #0c0e11;
-  --md-surface-container-low: #191c20;
-  --md-surface-container: #1d2024;
-  --md-surface-container-high: #272a2f;
-  --md-surface-container-highest: #32353a;
-  
-  --md-on-surface: #e2e2e9;
-  --md-on-surface-variant: #c4c6d0;
-  --md-outline: #44474e;
-  --md-outline-variant: #2d3036;
+  /* Google Material 3 Dark Palette */
+  --md-bg: #121316;
+  --md-surface: #1e1f23;
+  --md-surface-variant: #26282d;
+  --md-surface-high: #2f3137;
+  --md-border: #33353b;
+  --md-border-subtle: #27292e;
 
-  /* Google Colors */
+  /* Google Accent Colors */
   --google-blue: #8ab4f8;
-  --google-blue-container: #004a77;
-  --google-green: #81c995;
-  --google-green-container: #00522b;
-  --google-yellow: #fdd663;
-  --google-yellow-container: #574500;
-  --google-red: #f28b82;
-  --google-red-container: #8c1d18;
+  --google-blue-container: #1b3a5b;
+  --google-blue-text: #d3e3fd;
 
-  --background: var(--md-surface);
-  --foreground: var(--md-on-surface);
-  --card: var(--md-surface-container-low);
-  --card-foreground: var(--md-on-surface);
-  --primary: var(--google-blue);
-  --primary-foreground: #003258;
-  --border: var(--md-outline-variant);
-  --radius: 1rem;
+  --google-green: #81c995;
+  --google-green-container: #183824;
+  --google-green-text: #c4eed0;
+
+  --google-yellow: #fdd663;
+  --google-yellow-container: #3d3200;
+  --google-yellow-text: #ffe082;
+
+  --google-red: #f28b82;
+  --google-red-container: #441816;
+  --google-red-text: #fce8e6;
+
+  --text-primary: #e3e3e8;
+  --text-secondary: #9aa0a6;
+  --text-tertiary: #5f6368;
+
+  --background: var(--md-bg);
+  --foreground: var(--text-primary);
 }
 
 .dark {
-  --background: #111318;
-  --foreground: #e2e2e9;
-  --card: #191c20;
-  --card-foreground: #e2e2e9;
-  --border: #2d3036;
+  --background: #121316;
+  --foreground: #e3e3e8;
 }
 
 @theme {
@@ -52,35 +47,33 @@
   --font-mono: 'Roboto Mono', monospace;
 
   --color-google-blue: #8ab4f8;
-  --color-google-blue-dark: #1a73e8;
+  --color-google-blue-container: #1b3a5b;
   --color-google-green: #81c995;
-  --color-google-green-dark: #1e8e3e;
+  --color-google-green-container: #183824;
   --color-google-yellow: #fdd663;
-  --color-google-yellow-dark: #f9ab00;
+  --color-google-yellow-container: #3d3200;
   --color-google-red: #f28b82;
-  --color-google-red-dark: #d93025;
+  --color-google-red-container: #441816;
 
-  --color-md-surface: #111318;
-  --color-md-surface-container-low: #191c20;
-  --color-md-surface-container: #1d2024;
-  --color-md-surface-container-high: #272a2f;
-  --color-md-surface-container-highest: #32353a;
-  --color-md-outline: #44474e;
-  --color-md-outline-variant: #2d3036;
+  --color-surface: #1e1f23;
+  --color-surface-variant: #26282d;
+  --color-surface-high: #2f3137;
+  --color-border: #33353b;
+  --color-border-subtle: #27292e;
 }
 
 body {
-  background-color: #111318;
-  color: #e2e2e9;
+  background-color: #121316;
+  color: #e3e3e8;
   font-family: var(--font-sans);
   overflow-x: hidden;
-  letter-spacing: -0.01em;
+  -webkit-font-smoothing: antialiased;
 }
 
-/* Material Minimalist Scrollbar */
+/* Minimalist Scrollbar */
 .custom-scrollbar::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 5px;
+  height: 5px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-track {
@@ -88,95 +81,39 @@ body {
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb {
-  background: #32353a;
+  background: #33353b;
   border-radius: 9999px;
 }
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: #44474e;
+  background: #44474f;
 }
 
-/* Material 3 Elevation & Surface utility classes */
-.m3-surface {
-  background-color: #191c20;
-  border: 1px solid #2d3036;
-  border-radius: 1.25rem;
+/* Material animations */
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
-.m3-surface-high {
-  background-color: #272a2f;
-  border: 1px solid #3c4048;
-  border-radius: 1.25rem;
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
-.m3-card {
-  background-color: #1d2024;
-  border: 1px solid #2d3036;
-  border-radius: 1.25rem;
-  transition: all 0.2s cubic-bezier(0.2, 0, 0, 1);
+.animate-slide-up {
+  animation: slideUp 0.25s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }
 
-.m3-card:hover {
-  border-color: #44474e;
-}
-
-.m3-chip {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.375rem 0.875rem;
-  border-radius: 9999px;
-  font-size: 0.75rem;
-  font-weight: 500;
-  border: 1px solid #32353a;
-  background-color: #191c20;
-  color: #c4c6d0;
-  transition: all 0.15s ease;
-}
-
-.m3-chip-selected {
-  background-color: #004a77;
-  border-color: #8ab4f8;
-  color: #d1e4ff;
-}
-
-.m3-btn-primary {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  border-radius: 9999px;
-  padding: 0.625rem 1.25rem;
-  font-size: 0.875rem;
-  font-weight: 600;
-  background-color: #8ab4f8;
-  color: #003258;
-  transition: all 0.15s ease;
-  cursor: pointer;
-}
-
-.m3-btn-primary:hover {
-  background-color: #a8c7fa;
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
-}
-
-.m3-btn-tonal {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  border-radius: 9999px;
-  padding: 0.625rem 1.25rem;
-  font-size: 0.875rem;
-  font-weight: 600;
-  background-color: #272a2f;
-  color: #e2e2e9;
-  border: 1px solid #3c4048;
-  transition: all 0.15s ease;
-  cursor: pointer;
-}
-
-.m3-btn-tonal:hover {
-  background-color: #32353a;
-  color: #ffffff;
+.animate-fade-in {
+  animation: fadeIn 0.2s ease-out forwards;
 }

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { User, Skull, Store, ArrowRight, AlertTriangle, ShieldCheck, Clock, Layers, Info } from 'lucide-react';
+import { User, Skull, Store, ArrowRight, AlertTriangle, ShieldCheck, Clock, Layers } from 'lucide-react';
 import type { HopNode } from '../../types';
 
 export interface HopChainVisualizerProps {
@@ -12,56 +12,38 @@ export const HopChainVisualizer: React.FC<HopChainVisualizerProps> = ({
   currentMerchant,
 }) => {
   const [selectedNodeId, setSelectedNodeId] = useState<string | null>(null);
-  const [hoveredNodeId, setHoveredNodeId] = useState<string | null>(null);
 
   const selectedNode = hopChain.find((n) => n.id === selectedNodeId) || null;
 
-  // Node styling and iconography based on node type and status
-  const getNodeConfig = (node: HopNode, isTargetMerchant: boolean) => {
+  const getNodeConfig = (node: HopNode) => {
     switch (node.type) {
       case 'victim':
         return {
           icon: User,
-          bgClass: 'bg-rose-950/80',
-          borderClass: 'border-rose-500/70',
-          textClass: 'text-rose-300',
-          badgeClass: 'bg-rose-500/20 text-rose-300 border-rose-500/40',
-          glowClass: 'shadow-[0_0_15px_rgba(244,63,94,0.35)]',
+          bgClass: 'bg-[#3c1618]',
+          borderClass: 'border-[#f28b82]/40',
+          textClass: 'text-[#f28b82]',
+          badgeClass: 'bg-[#f28b82]/20 text-[#f28b82]',
           typeName: 'Reporting Victim',
-          indicatorColor: '#f43f5e',
         };
       case 'mule_l1':
         return {
           icon: Skull,
-          bgClass: 'bg-orange-950/80',
-          borderClass: 'border-orange-500/70',
+          bgClass: 'bg-[#3b2010]',
+          borderClass: 'border-orange-500/40',
           textClass: 'text-orange-300',
-          badgeClass: 'bg-orange-500/20 text-orange-300 border-orange-500/40',
-          glowClass: 'shadow-[0_0_15px_rgba(249,115,22,0.35)]',
+          badgeClass: 'bg-orange-500/20 text-orange-300',
           typeName: 'Layer-1 Mule (Pass-Through)',
-          indicatorColor: '#f97316',
         };
       case 'mule_l2':
-        return {
-          icon: AlertTriangle,
-          bgClass: 'bg-amber-950/80',
-          borderClass: 'border-amber-500/70',
-          textClass: 'text-amber-300',
-          badgeClass: 'bg-amber-500/20 text-amber-300 border-amber-500/40',
-          glowClass: 'shadow-[0_0_15px_rgba(245,158,11,0.35)]',
-          typeName: 'Layer-2 Mule (Aggregator)',
-          indicatorColor: '#f59e0b',
-        };
       case 'mule_l3':
         return {
           icon: AlertTriangle,
-          bgClass: 'bg-yellow-950/80',
-          borderClass: 'border-yellow-500/70',
-          textClass: 'text-yellow-300',
-          badgeClass: 'bg-yellow-500/20 text-yellow-300 border-yellow-500/40',
-          glowClass: 'shadow-[0_0_15px_rgba(234,179,8,0.35)]',
-          typeName: 'Layer-3 Mule Sub-Node',
-          indicatorColor: '#eab308',
+          bgClass: 'bg-[#3b2f0a]',
+          borderClass: 'border-[#fdd663]/40',
+          textClass: 'text-[#ffe082]',
+          badgeClass: 'bg-[#fdd663]/20 text-[#ffe082]',
+          typeName: `Layer-${node.type === 'mule_l2' ? '2' : '3'} Mule`,
         };
       case 'merchant':
       default: {
@@ -69,31 +51,11 @@ export const HopChainVisualizer: React.FC<HopChainVisualizerProps> = ({
         const isRejected = node.status === 'escalated';
         return {
           icon: isCleared ? ShieldCheck : isRejected ? AlertTriangle : Store,
-          bgClass: isCleared ? 'bg-emerald-950/80' : isRejected ? 'bg-rose-950/80' : 'bg-amber-950/80',
-          borderClass: isCleared
-            ? 'border-emerald-500/80 ring-2 ring-emerald-500/40'
-            : isRejected
-            ? 'border-rose-500/80 ring-2 ring-rose-500/40'
-            : isTargetMerchant
-            ? 'border-amber-500/80 ring-2 ring-amber-500/40'
-            : 'border-slate-600',
-          textClass: isCleared ? 'text-emerald-300' : isRejected ? 'text-rose-300' : 'text-amber-300',
-          badgeClass: isCleared
-            ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40'
-            : isRejected
-            ? 'bg-rose-500/20 text-rose-300 border-rose-500/40'
-            : 'bg-amber-500/20 text-amber-300 border-amber-500/40',
-          glowClass: isCleared
-            ? 'shadow-[0_0_20px_rgba(16,185,129,0.45)]'
-            : isRejected
-            ? 'shadow-[0_0_20px_rgba(244,63,94,0.45)]'
-            : 'shadow-[0_0_20px_rgba(245,158,11,0.35)]',
-          typeName: isCleared
-            ? 'Verified Merchant (Safe Harbor)'
-            : isRejected
-            ? 'Escalated to Cyber Cell (Lien Frozen)'
-            : 'Target Terminal POS (Under Review)',
-          indicatorColor: isCleared ? '#10b981' : isRejected ? '#f43f5e' : '#f59e0b',
+          bgClass: isCleared ? 'bg-[#133924]' : isRejected ? 'bg-[#3c1618]' : 'bg-[#1b3a5b]',
+          borderClass: isCleared ? 'border-[#81c995]/50' : isRejected ? 'border-[#f28b82]/50' : 'border-[#8ab4f8]/50',
+          textClass: isCleared ? 'text-[#81c995]' : isRejected ? 'text-[#f28b82]' : 'text-[#8ab4f8]',
+          badgeClass: isCleared ? 'bg-[#81c995]/20 text-[#81c995]' : isRejected ? 'bg-[#f28b82]/20 text-[#f28b82]' : 'bg-[#8ab4f8]/20 text-[#8ab4f8]',
+          typeName: isCleared ? 'Verified Merchant' : isRejected ? 'Suspended Account' : 'Terminal Retail POS',
         };
       }
     }
@@ -101,177 +63,90 @@ export const HopChainVisualizer: React.FC<HopChainVisualizerProps> = ({
 
   const formatAmount = (num: number) => {
     return num.toLocaleString('en-US', {
-      maximumFractionDigits: 2,
+      maximumFractionDigits: 0,
     });
   };
 
   return (
-    <div className="rounded-xl bg-slate-900/80 border border-slate-700/50 p-5 sm:p-6 shadow-xl backdrop-blur-md relative overflow-hidden flex flex-col gap-4">
-      {/* Background ambient glow */}
-      <div className="absolute -top-24 -right-24 w-60 h-60 bg-blue-500/5 rounded-full blur-3xl pointer-events-none" />
-
-      {/* Header bar */}
-      <div className="flex flex-wrap items-center justify-between gap-2 border-b border-slate-800 pb-3">
+    <div className="rounded-3xl bg-[#1e1f20] border border-[#333538] p-5 sm:p-6 shadow-sm flex flex-col gap-4 text-[#e3e3e3]">
+      
+      {/* Header */}
+      <div className="flex items-center justify-between pb-3 border-b border-[#2d2f31] flex-wrap gap-2">
         <div className="flex items-center gap-2.5">
-          <div className="p-2 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400">
-            <Layers className="h-5 w-5" />
+          <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#1b3a5b] text-[#8ab4f8]">
+            <Layers className="h-4 w-4" />
           </div>
           <div>
-            <h3 className="text-base sm:text-lg font-bold text-slate-100 flex items-center gap-2">
+            <h3 className="text-sm font-semibold text-white">
               Transaction Hop-Chain Analysis
-              <span className="text-xs font-mono font-medium px-2 py-0.5 rounded-full bg-slate-800 text-slate-300 border border-slate-700">
-                {hopChain.length} Hops Traced
-              </span>
             </h3>
-            <p className="text-xs text-slate-400">
-              Interactive forensic graph tracing velocity &amp; multi-tier dispersal
+            <p className="text-[11px] text-[#9aa0a6]">
+              Multi-tier payment flow &amp; dwell velocity tracking
             </p>
           </div>
         </div>
 
-        {/* Legend indicator */}
-        <div className="flex items-center gap-3 text-[11px] text-slate-400">
-          <span className="inline-flex items-center gap-1">
-            <span className="h-2 w-2 rounded-full bg-rose-500" /> Victim
+        <div className="flex items-center gap-2 text-[11px] text-[#9aa0a6]">
+          <span className="flex items-center gap-1">
+            <span className="h-2 w-2 rounded-full bg-[#f28b82]" /> Victim
           </span>
-          <span className="inline-flex items-center gap-1">
-            <span className="h-2 w-2 rounded-full bg-orange-500" /> Mule L1
+          <span className="flex items-center gap-1">
+            <span className="h-2 w-2 rounded-full bg-orange-400" /> Mule
           </span>
-          <span className="inline-flex items-center gap-1">
-            <span className="h-2 w-2 rounded-full bg-amber-500" /> Mule L2
-          </span>
-          <span className="inline-flex items-center gap-1">
-            <span className="h-2 w-2 rounded-full bg-emerald-500" /> Merchant
+          <span className="flex items-center gap-1">
+            <span className="h-2 w-2 rounded-full bg-[#81c995]" /> Merchant
           </span>
         </div>
       </div>
 
-      {/* Graph Visualizer Canvas (Scrollable horizontally on smaller screens) */}
-      <div className="relative w-full overflow-x-auto py-4 custom-scrollbar">
-        <div className="min-w-[620px] flex items-center justify-between gap-1 sm:gap-2 px-2">
+      {/* Horizontal Nodes Flow */}
+      <div className="overflow-x-auto py-1 custom-scrollbar">
+        <div className="flex items-center justify-between gap-2 min-w-[540px]">
           {hopChain.map((node, index) => {
             const isLast = index === hopChain.length - 1;
-            const isTargetMerchant =
-              node.type === 'merchant' ||
-              (currentMerchant ? node.label.toLowerCase().includes(currentMerchant.toLowerCase()) : false);
-            const config = getNodeConfig(node, isTargetMerchant);
-            const IconComponent = config.icon;
-            const isHovered = hoveredNodeId === node.id;
+            const config = getNodeConfig(node);
+            const Icon = config.icon;
             const isSelected = selectedNodeId === node.id;
 
             return (
               <React.Fragment key={node.id}>
                 {/* Node Box */}
                 <div
-                  className="relative group flex-1 max-w-[210px] min-w-[145px]"
-                  onMouseEnter={() => setHoveredNodeId(node.id)}
-                  onMouseLeave={() => setHoveredNodeId(null)}
                   onClick={() => setSelectedNodeId(isSelected ? null : node.id)}
+                  className={`flex-1 min-w-[120px] max-w-[190px] p-3 rounded-2xl border transition-all cursor-pointer ${
+                    config.bgClass
+                  } ${config.borderClass} ${isSelected ? 'ring-2 ring-white/50 scale-[1.02]' : 'hover:scale-[1.01]'}`}
                 >
-                  <div
-                    className={`cursor-pointer rounded-xl p-3.5 border transition-all duration-200 backdrop-blur-md relative ${config.bgClass} ${config.borderClass} ${
-                      isSelected || isHovered ? `${config.glowClass} scale-[1.03] -translate-y-0.5` : 'hover:border-slate-500'
-                    }`}
-                  >
-                    {/* Top status indicator strip */}
-                    <div className="flex items-center justify-between gap-1 mb-2">
-                      <span className={`text-[10px] font-mono uppercase px-1.5 py-0.5 rounded border font-semibold ${config.badgeClass}`}>
-                        Hop #{index + 1}
-                      </span>
-                      <div className="flex items-center gap-1 text-[11px] font-mono text-slate-400">
-                        <Clock className="h-3 w-3 text-slate-500" />
-                        <span className="truncate max-w-[70px]" title={node.holdDuration}>
-                          {node.holdDuration}
-                        </span>
-                      </div>
-                    </div>
-
-                    {/* Node Icon & Label */}
-                    <div className="flex items-start gap-2 mb-2">
-                      <div className={`p-1.5 rounded-lg border shrink-0 ${config.badgeClass}`}>
-                        <IconComponent className="h-4 w-4" />
-                      </div>
-                      <div className="overflow-hidden">
-                        <div className="text-xs font-semibold text-slate-200 truncate group-hover:text-white" title={node.label}>
-                          {node.label}
-                        </div>
-                        <div className="text-[10px] text-slate-400 truncate">
-                          {config.typeName}
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Financial Amount */}
-                    <div className="pt-2 border-t border-slate-800/80 flex items-baseline justify-between">
-                      <span className="text-[10px] text-slate-500 font-mono">Amount:</span>
-                      <span className={`text-xs font-mono font-bold ${config.textClass}`}>
-                        {formatAmount(node.amount)}
-                      </span>
-                    </div>
-
-                    {/* Interactive Click hint */}
-                    <div className="mt-1 text-[9px] text-slate-500 text-center flex items-center justify-center gap-0.5 opacity-60 group-hover:opacity-100 transition-opacity">
-                      <Info className="h-2.5 w-2.5" />
-                      <span>{isSelected ? 'Click to collapse' : 'Click to inspect'}</span>
-                    </div>
+                  <div className="flex items-center justify-between mb-1">
+                    <span className={`text-[10px] font-semibold px-1.5 py-0.5 rounded-full ${config.badgeClass}`}>
+                      Hop #{index + 1}
+                    </span>
+                    <span className="text-[10px] text-[#9aa0a6] flex items-center gap-0.5 font-mono">
+                      <Clock className="h-2.5 w-2.5" />
+                      {node.holdDuration}
+                    </span>
                   </div>
 
-                  {/* Micro Tooltip on Hover */}
-                  {isHovered && !isSelected && (
-                    <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 z-40 w-64 p-3 rounded-lg bg-slate-950/95 border border-slate-700 shadow-2xl text-xs text-slate-200 pointer-events-none animate-fade-in backdrop-blur-md">
-                      <div className="font-semibold text-slate-100 flex items-center justify-between border-b border-slate-800 pb-1.5 mb-1.5">
-                        <span className="truncate">{node.label}</span>
-                        <span className="text-[10px] font-mono px-1.5 py-0.5 rounded bg-slate-800 text-emerald-400">
-                          {node.status}
-                        </span>
-                      </div>
-                      {node.accountNumber && (
-                        <div className="text-[11px] text-slate-400 font-mono mb-1">
-                          Account: <span className="text-slate-300">{node.accountNumber}</span>
-                        </div>
-                      )}
-                      <div className="text-[11px] text-slate-400 font-mono mb-1">
-                        Dwell Time: <span className="text-slate-300 font-semibold">{node.holdDuration}</span>
-                      </div>
-                      {node.routingDetails && (
-                        <div className="text-[11px] text-slate-400 italic line-clamp-3">
-                          &ldquo;{node.routingDetails}&rdquo;
-                        </div>
-                      )}
-                      {/* Arrow tip */}
-                      <div className="absolute top-full left-1/2 -translate-x-1/2 border-4 border-transparent border-t-slate-800" />
-                    </div>
-                  )}
+                  <div className="flex items-center gap-1.5 mb-1.5">
+                    <Icon className={`h-4 w-4 ${config.textClass} shrink-0`} />
+                    <span className="text-xs font-semibold text-white truncate" title={node.label}>
+                      {node.label}
+                    </span>
+                  </div>
+
+                  <div className="text-[11px] font-mono text-white/90">
+                    ₹{formatAmount(node.amount)}
+                  </div>
+
+                  <div className="text-[10px] text-[#9aa0a6] mt-0.5 truncate">
+                    {config.typeName}
+                  </div>
                 </div>
 
-                {/* Connecting Pipe / Arrow with animated dashes */}
+                {/* Arrow connector */}
                 {!isLast && (
-                  <div className="flex flex-col items-center justify-center px-1 shrink-0 relative">
-                    {/* Animated SVG line connector */}
-                    <svg width="40" height="24" className="overflow-visible">
-                      {/* Base Line */}
-                      <line
-                        x1="2"
-                        y1="12"
-                        x2="32"
-                        y2="12"
-                        stroke="#334155"
-                        strokeWidth="2"
-                      />
-                      {/* Flowing animated dash */}
-                      <line
-                        x1="2"
-                        y1="12"
-                        x2="32"
-                        y2="12"
-                        stroke="#10b981"
-                        strokeWidth="2.5"
-                        strokeDasharray="4 4"
-                        className="animate-[dash_1s_linear_infinite]"
-                      />
-                    </svg>
-                    <ArrowRight className="h-3.5 w-3.5 text-emerald-400 absolute right-0 translate-x-1" />
-                    <span className="text-[9px] font-mono text-slate-500 mt-1">Dispersal</span>
+                  <div className="flex flex-col items-center justify-center px-0.5 text-[#5f6368] shrink-0">
+                    <ArrowRight className="h-4 w-4 text-[#8ab4f8]" />
                   </div>
                 )}
               </React.Fragment>
@@ -280,47 +155,26 @@ export const HopChainVisualizer: React.FC<HopChainVisualizerProps> = ({
         </div>
       </div>
 
-      {/* Expanded Node Inspector Drawer when clicked */}
+      {/* Selected Node Details Drawer */}
       {selectedNode && (
-        <div className="rounded-lg bg-slate-950/90 border border-slate-800 p-4 animate-slide-up flex flex-col gap-2">
-          <div className="flex items-center justify-between border-b border-slate-800 pb-2">
-            <div className="flex items-center gap-2">
-              <span className="text-xs font-mono uppercase px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
-                Detailed Node Telemetry
-              </span>
-              <h4 className="text-sm font-bold text-slate-100">{selectedNode.label}</h4>
-            </div>
-            <button
-              onClick={() => setSelectedNodeId(null)}
-              className="text-xs text-slate-400 hover:text-slate-200 px-2 py-0.5 rounded bg-slate-800/80 cursor-pointer"
-            >
-              Close
-            </button>
+        <div className="p-3 rounded-2xl bg-[#131314] text-xs text-[#c4c6d0] flex items-center justify-between animate-slide-up">
+          <div className="flex items-center gap-2">
+            <span className="font-semibold text-white">{selectedNode.label}</span>
+            <span className="text-[#9aa0a6]">|</span>
+            <span>Hold: {selectedNode.holdDuration}</span>
+            <span className="text-[#9aa0a6]">|</span>
+            <span className="font-mono text-white">Amount: ₹{formatAmount(selectedNode.amount)}</span>
           </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs pt-1">
-            <div className="rounded bg-slate-900/60 p-2.5 border border-slate-800">
-              <span className="text-[10px] text-slate-500 uppercase block font-mono">Account / Identifier</span>
-              <span className="font-mono text-slate-200 font-semibold">{selectedNode.accountNumber || 'N/A (Masked)'}</span>
-            </div>
-            <div className="rounded bg-slate-900/60 p-2.5 border border-slate-800">
-              <span className="text-[10px] text-slate-500 uppercase block font-mono">Dwell Time / Velocity</span>
-              <span className="font-mono text-amber-300 font-semibold">{selectedNode.holdDuration}</span>
-            </div>
-            <div className="rounded bg-slate-900/60 p-2.5 border border-slate-800">
-              <span className="text-[10px] text-slate-500 uppercase block font-mono">Lien Status</span>
-              <span className="font-mono text-rose-300 uppercase font-semibold">{selectedNode.status}</span>
-            </div>
-          </div>
-
-          {selectedNode.routingDetails && (
-            <div className="mt-1 text-xs text-slate-300 bg-slate-900/40 rounded p-2.5 border border-slate-800/80">
-              <span className="text-[10px] text-slate-500 uppercase block font-mono mb-0.5">Forensic Chain Log</span>
-              {selectedNode.routingDetails}
-            </div>
-          )}
+          <button
+            type="button"
+            onClick={() => setSelectedNodeId(null)}
+            className="text-[11px] text-[#8ab4f8] hover:underline cursor-pointer"
+          >
+            Close
+          </button>
         </div>
       )}
+
     </div>
   );
 };

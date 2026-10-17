@@ -10,16 +10,15 @@ const AppContent: React.FC = () => {
   const { currentView, showApiKeyModal } = useAppContext();
 
   useEffect(() => {
-    // Ensure dark class is persistently applied to root HTML
     document.documentElement.classList.add('dark');
   }, []);
 
   return (
-    <div className="min-h-screen flex flex-col bg-background text-foreground font-sans selection:bg-emerald-500/30 selection:text-emerald-300 antialiased overflow-hidden">
-      {/* Sticky Navigation Bar */}
+    <div className="min-h-screen flex flex-col bg-[#131314] text-[#e3e3e3] font-sans antialiased overflow-hidden selection:bg-[#8ab4f8]/25 selection:text-[#d3e3fd]">
+      {/* Google-Style Top Navigation (56px) */}
       <TopNavBar />
 
-      {/* Main View Router */}
+      {/* Main Content Router */}
       <main className="flex-1 w-full overflow-hidden flex flex-col">
         {currentView === 'split' && (
           <SplitLayout
@@ -29,14 +28,14 @@ const AppContent: React.FC = () => {
         )}
 
         {currentView === 'merchant' && (
-          <div className="h-[calc(100vh-4rem)] w-full overflow-y-auto flex items-center justify-center p-3 sm:p-6 bg-[#04070d]">
-            <MerchantApp />
+          <div className="h-[calc(100vh-3.5rem)] w-full overflow-y-auto flex items-start justify-center p-4 sm:p-6 custom-scrollbar">
+            <MerchantApp className="max-w-lg" />
           </div>
         )}
 
         {currentView === 'bank' && (
-          <div className="h-[calc(100vh-4rem)] w-full overflow-y-auto p-3 sm:p-6 bg-[#04070d]">
-            <div className="w-full max-w-7xl mx-auto h-full rounded-2xl bg-[#090e1a]/95 border border-slate-800/90 shadow-2xl overflow-y-auto p-2 sm:p-5 custom-scrollbar">
+          <div className="h-[calc(100vh-3.5rem)] w-full overflow-y-auto p-4 sm:p-6 custom-scrollbar">
+            <div className="w-full max-w-7xl mx-auto">
               <BankDashboard />
             </div>
           </div>

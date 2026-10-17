@@ -28,7 +28,6 @@ export const ApiKeyModal: React.FC = () => {
     }
   }, [showApiKeyModal, geminiApiKey]);
 
-  // Handle Escape key to close
   useEffect(() => {
     const handleKeyDown = (e: KeyboardEvent) => {
       if (e.key === 'Escape' && showApiKeyModal) {
@@ -48,7 +47,7 @@ export const ApiKeyModal: React.FC = () => {
     setSavedSuccess(true);
     setTimeout(() => {
       toggleApiKeyModal(false);
-    }, 700);
+    }, 600);
   };
 
   const handleClear = () => {
@@ -57,7 +56,7 @@ export const ApiKeyModal: React.FC = () => {
     setSavedSuccess(true);
     setTimeout(() => {
       toggleApiKeyModal(false);
-    }, 700);
+    }, 600);
   };
 
   const handleBackdropClick = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -69,67 +68,65 @@ export const ApiKeyModal: React.FC = () => {
   return (
     <div
       onClick={handleBackdropClick}
-      className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-md p-4 animate-fade-in"
+      className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 p-4 animate-fade-in"
       role="dialog"
       aria-modal="true"
-      aria-labelledby="api-key-modal-title"
     >
-      <div className="relative w-full max-w-lg rounded-2xl bg-[#0c1222] border border-slate-700/80 shadow-2xl p-6 sm:p-7 text-slate-100 overflow-hidden">
-        {/* Glow accent */}
-        <div className="absolute top-0 left-0 right-0 h-1 bg-gradient-to-r from-emerald-500 via-teal-400 to-cyan-500" />
+      <div className="relative w-full max-w-lg rounded-3xl bg-[#1e1f23] border border-[#33353b] shadow-2xl p-6 sm:p-7 text-[#e3e3e8] overflow-hidden flex flex-col gap-4">
+        {/* Top accent line */}
+        <div className="absolute top-0 left-0 right-0 h-1 bg-[#8ab4f8]" />
 
         {/* Close Button */}
         <button
           onClick={() => toggleApiKeyModal(false)}
-          className="absolute top-4 right-4 rounded-lg p-1.5 text-slate-400 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer"
-          aria-label="Close modal"
+          className="absolute top-4 right-4 rounded-full p-1.5 text-[#9aa0a6] hover:text-white hover:bg-[#26282d] transition-colors cursor-pointer"
+          aria-label="Close"
         >
-          <X className="h-5 w-5" />
+          <X className="h-4 w-4" />
         </button>
 
         {/* Header */}
-        <div className="flex items-center gap-3.5 mb-4">
-          <div className="flex h-12 w-12 items-center justify-center rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-400 shadow-inner">
-            <Key className="h-6 w-6" />
+        <div className="flex items-center gap-3">
+          <div className="flex h-10 w-10 items-center justify-center rounded-2xl bg-[#1b3a5b] text-[#8ab4f8]">
+            <Key className="h-5 w-5" />
           </div>
           <div>
-            <h2 id="api-key-modal-title" className="text-xl font-bold tracking-tight text-white flex items-center gap-2">
-              Gemini API Settings
-              <span className="rounded-md bg-emerald-500/20 px-2 py-0.5 text-[11px] font-mono font-semibold text-emerald-400 border border-emerald-500/30">
+            <h2 className="text-base font-semibold text-white flex items-center gap-2">
+              Gemini API Key
+              <span className="rounded-full bg-[#1b3a5b] px-2 py-0.5 text-[10.5px] font-medium text-[#8ab4f8]">
                 2.5 Flash
               </span>
             </h2>
-            <p className="text-xs text-slate-400 mt-0.5">
-              Live multimodal evidence audit configuration
+            <p className="text-xs text-[#9aa0a6]">
+              Real-time multimodal forensic engine
             </p>
           </div>
         </div>
 
-        {/* Informational description */}
-        <div className="rounded-xl bg-slate-900/90 border border-slate-800 p-4 mb-5 space-y-2">
-          <p className="text-xs leading-relaxed text-slate-300">
-            Enter your <strong className="text-emerald-400">Gemini API key</strong> from Google AI Studio to enable live Gemini 2.5 Flash analysis of merchant voice statements, invoice scans, and counterfeit forensic checks.
+        {/* Info card */}
+        <div className="rounded-2xl bg-[#121316] border border-[#2f3136] p-3.5 space-y-1.5 text-xs text-[#c4c6d0] leading-relaxed">
+          <p>
+            Enter your free <strong className="text-white">Gemini API key</strong> from Google AI Studio to perform live multimodal vision &amp; vernacular voice audits.
           </p>
-          <div className="flex items-center gap-2 text-[11px] text-slate-400 pt-1">
-            <ShieldCheck className="h-4 w-4 text-emerald-400 shrink-0" />
-            <span>Without a key, the platform operates seamlessly in <strong className="text-amber-400">Simulator Mode</strong> with realistic deterministic responses.</span>
+          <div className="flex items-center gap-1.5 text-[11px] text-[#9aa0a6]">
+            <ShieldCheck className="h-3.5 w-3.5 text-[#81c995] shrink-0" />
+            <span>Without a key, the app runs in <strong className="text-[#ffe082]">Simulator Mode</strong> with realistic responses.</span>
           </div>
         </div>
 
-        <form onSubmit={handleSave} className="space-y-5">
-          {/* Input Field */}
+        <form onSubmit={handleSave} className="space-y-4">
           <div>
-            <div className="flex items-center justify-between mb-1.5">
-              <label htmlFor="gemini-api-key" className="text-xs font-semibold text-slate-200">
-                Google AI Studio API Key
+            <div className="flex items-center justify-between mb-1.5 text-xs">
+              <label htmlFor="gemini-api-key" className="font-medium text-white">
+                Google AI Studio Key
               </label>
               <a
                 href="https://aistudio.google.com/apikey"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-1 text-[11px] font-medium text-emerald-400 hover:text-emerald-300 transition-colors"
+                className="inline-flex items-center gap-1 text-[#8ab4f8] hover:underline text-[11px]"
               >
-                <span>Get API Key</span>
+                <span>Get Free Key</span>
                 <ExternalLink className="h-3 w-3" />
               </a>
             </div>
@@ -142,59 +139,53 @@ export const ApiKeyModal: React.FC = () => {
                 value={inputKey}
                 onChange={(e) => setInputKey(e.target.value)}
                 placeholder="AIzaSy..."
-                className="w-full rounded-xl bg-slate-950/80 border border-slate-700/80 px-4 py-2.5 text-sm text-slate-100 placeholder-slate-500 focus:border-emerald-500 focus:outline-none focus:ring-2 focus:ring-emerald-500/20 pr-11 font-mono transition-all"
+                className="w-full rounded-xl bg-[#121316] border border-[#33353b] px-3.5 py-2.5 text-xs font-mono text-white placeholder-[#5f6368] focus:border-[#8ab4f8] focus:outline-none pr-10"
                 autoComplete="off"
                 spellCheck="false"
               />
               <button
                 type="button"
                 onClick={() => setShowPassword(!showPassword)}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-200 transition-colors cursor-pointer"
-                title={showPassword ? 'Hide API key' : 'Show API key'}
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-[#9aa0a6] hover:text-white cursor-pointer"
               >
                 {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
               </button>
             </div>
-            <p className="text-[11px] text-slate-500 mt-1.5">
-              Key is stored locally in your browser’s localStorage. Never transmitted to third-party backends.
+            <p className="text-[11px] text-[#5f6368] mt-1">
+              Key is saved directly in your browser's localStorage.
             </p>
           </div>
 
-          {/* Success Banner */}
           {savedSuccess && (
-            <div className="flex items-center gap-2 rounded-lg bg-emerald-500/20 border border-emerald-500/40 p-2.5 text-xs font-medium text-emerald-300 animate-fade-in">
-              <CheckCircle2 className="h-4 w-4 shrink-0 text-emerald-400" />
+            <div className="flex items-center gap-2 rounded-xl bg-[#183824] border border-[#81c995]/40 p-2.5 text-xs text-[#c4eed0] animate-slide-up">
+              <CheckCircle2 className="h-4 w-4 text-[#81c995]" />
               <span>Settings updated successfully!</span>
             </div>
           )}
 
-          {/* Action Buttons */}
-          <div className="flex items-center justify-between gap-3 pt-2">
+          <div className="flex items-center justify-between gap-2 pt-2 border-t border-[#2f3136]">
             {geminiApiKey ? (
               <button
                 type="button"
                 onClick={handleClear}
-                className="flex items-center gap-1.5 px-3 py-2 rounded-lg bg-red-500/10 hover:bg-red-500/20 text-red-400 border border-red-500/30 text-xs font-medium transition-colors cursor-pointer"
-                title="Remove API key and switch to Simulator Mode"
+                className="inline-flex items-center gap-1 px-3 py-1.5 rounded-full bg-[#441816] text-[#f28b82] text-xs font-medium hover:bg-[#571e1b] cursor-pointer"
               >
-                <Trash2 className="h-3.5 w-3.5" />
-                <span>Revert to Simulator</span>
+                <Trash2 className="h-3 w-3" />
+                <span>Clear Key</span>
               </button>
-            ) : (
-              <div />
-            )}
+            ) : <div />}
 
-            <div className="flex items-center gap-2.5">
+            <div className="flex items-center gap-2">
               <button
                 type="button"
                 onClick={() => toggleApiKeyModal(false)}
-                className="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-semibold transition-colors cursor-pointer"
+                className="px-4 py-2 rounded-full text-xs font-medium text-[#9aa0a6] hover:bg-[#26282d] cursor-pointer"
               >
                 Cancel
               </button>
               <button
                 type="submit"
-                className="flex items-center gap-1.5 px-4 py-2 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-slate-950 text-xs font-bold transition-all shadow-md hover:shadow-emerald-500/25 cursor-pointer"
+                className="inline-flex items-center gap-1.5 px-5 py-2 rounded-full bg-[#8ab4f8] hover:bg-[#a8c7fa] text-[#002b4f] text-xs font-semibold cursor-pointer shadow-xs"
               >
                 <Sparkles className="h-3.5 w-3.5" />
                 <span>Save Key</span>

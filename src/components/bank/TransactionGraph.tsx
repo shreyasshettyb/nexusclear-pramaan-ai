@@ -255,9 +255,9 @@ export const TransactionGraph: React.FC<TransactionGraphProps> = ({
   }, '');
 
   return (
-    <div className="rounded-2xl bg-[#1d2024] border border-[#2d3036] p-5 sm:p-6 shadow-sm relative overflow-hidden flex flex-col gap-4">
+    <div className="rounded-3xl bg-[#1e1f20] border border-[#333538] p-5 sm:p-6 shadow-sm flex flex-col gap-4 text-[#e3e3e3]">
       {/* Header bar */}
-      <div className="flex items-center justify-between border-b border-[#2d3036] pb-3 flex-wrap gap-2">
+      <div className="flex items-center justify-between border-b border-[#2d2f31] pb-3 flex-wrap gap-2">
         <div className="flex items-center gap-2.5">
           <div
             className={`p-2 rounded-xl border ${
