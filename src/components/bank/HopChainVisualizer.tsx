@@ -66,23 +66,34 @@ export const HopChainVisualizer: React.FC<HopChainVisualizerProps> = ({
       case 'merchant':
       default: {
         const isCleared = node.status === 'cleared';
+        const isRejected = node.status === 'escalated';
         return {
-          icon: isCleared ? ShieldCheck : Store,
-          bgClass: isCleared ? 'bg-emerald-950/80' : 'bg-amber-950/80',
+          icon: isCleared ? ShieldCheck : isRejected ? AlertTriangle : Store,
+          bgClass: isCleared ? 'bg-emerald-950/80' : isRejected ? 'bg-rose-950/80' : 'bg-amber-950/80',
           borderClass: isCleared
             ? 'border-emerald-500/80 ring-2 ring-emerald-500/40'
+            : isRejected
+            ? 'border-rose-500/80 ring-2 ring-rose-500/40'
             : isTargetMerchant
             ? 'border-amber-500/80 ring-2 ring-amber-500/40'
             : 'border-slate-600',
-          textClass: isCleared ? 'text-emerald-300' : 'text-amber-300',
+          textClass: isCleared ? 'text-emerald-300' : isRejected ? 'text-rose-300' : 'text-amber-300',
           badgeClass: isCleared
             ? 'bg-emerald-500/20 text-emerald-300 border-emerald-500/40'
+            : isRejected
+            ? 'bg-rose-500/20 text-rose-300 border-rose-500/40'
             : 'bg-amber-500/20 text-amber-300 border-amber-500/40',
           glowClass: isCleared
             ? 'shadow-[0_0_20px_rgba(16,185,129,0.45)]'
+            : isRejected
+            ? 'shadow-[0_0_20px_rgba(244,63,94,0.45)]'
             : 'shadow-[0_0_20px_rgba(245,158,11,0.35)]',
-          typeName: isCleared ? 'Verified Merchant (Safe Harbor)' : 'Target Terminal POS (Under Review)',
-          indicatorColor: isCleared ? '#10b981' : '#f59e0b',
+          typeName: isCleared
+            ? 'Verified Merchant (Safe Harbor)'
+            : isRejected
+            ? 'Escalated to Cyber Cell (Lien Frozen)'
+            : 'Target Terminal POS (Under Review)',
+          indicatorColor: isCleared ? '#10b981' : isRejected ? '#f43f5e' : '#f59e0b',
         };
       }
     }

@@ -12,6 +12,7 @@ import {
   ExternalLink,
 } from 'lucide-react';
 import type { CLSBreakdown, FrozenTransaction, GeminiAuditResult, JurisdictionConfig } from '../../types';
+import { useAppContext } from '../../context/AppContext';
 
 export interface ActionBarProps {
   clsResult: CLSBreakdown | null;
@@ -32,13 +33,15 @@ export const ActionBar: React.FC<ActionBarProps> = ({
   geminiResult,
   jurisdictionConfig,
 }) => {
+  const { approveCase, rejectCase, adjudicationStatus } = useAppContext();
   const [downloadSuccess, setDownloadSuccess] = useState<boolean>(false);
+  const [rejectDossierSuccess, setRejectDossierSuccess] = useState<boolean>(false);
   const [lastAction, setLastAction] = useState<'approved' | 'rejected' | null>(null);
 
   const score = clsResult?.totalScore ?? 0;
   const isApproveRecommended = score >= 500;
   const isApproveDisabled = isProcessing || !clsResult || score < 500;
-  const isRejectDisabled = isProcessing || !clsResult;
+  const isRejectDisabled = isProcessing || !transaction;
 
   // Generates and downloads an enterprise-grade HTML/PDF-ready Statutory Audit Certificate
   const generateCertificateHtml = () => {
@@ -346,13 +349,157 @@ export const ActionBar: React.FC<ActionBarProps> = ({
     }
 
     setDownloadSuccess(true);
-    setTimeout(() => setDownloadSuccess(false), 5000);
+    setTimeout(() => setDownloadSuccess(false), 8000);
+  };
+
+  // Generates and downloads a formal Cyber Crime Escalation Report (NCRP 1930 / SPF ASC)
+  const generateEscalationDossierHtml = () => {
+    const caseId = transaction?.regulatoryReference || `NCRP-MULE-${Math.floor(100000 + Math.random() * 900000)}`;
+    const dateStr = new Date().toUTCString();
+    const merchant = transaction?.merchantName || 'Suspect Account';
+    const amountStr = transaction ? `${transaction.currency} ${transaction.amount.toLocaleString()}` : 'N/A';
+
+    const dossierHtml = `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>NCRP Cyber Crime Escalation Report - ${caseId}</title>
+  <style>
+    @page { size: A4; margin: 20mm; }
+    body {
+      font-family: 'Helvetica Neue', Arial, sans-serif;
+      color: #0f172a;
+      background: #ffffff;
+      margin: 0;
+      padding: 30px;
+      line-height: 1.5;
+    }
+    .cert-border {
+      border: 3px double #be123c;
+      padding: 30px;
+      position: relative;
+    }
+    .header {
+      text-align: center;
+      border-bottom: 2px solid #be123c;
+      padding-bottom: 15px;
+      margin-bottom: 25px;
+    }
+    .logo {
+      font-size: 24px;
+      font-weight: 800;
+      color: #be123c;
+      letter-spacing: 1.5px;
+      margin: 0;
+    }
+    .sublogo {
+      font-size: 12px;
+      color: #475569;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-top: 4px;
+    }
+    .title-banner {
+      background: #fff1f2;
+      border: 1px solid #f43f5e;
+      padding: 12px;
+      text-align: center;
+      margin: 20px 0;
+      border-radius: 4px;
+    }
+    .title-banner h2 {
+      margin: 0;
+      font-size: 16px;
+      color: #9f1239;
+      text-transform: uppercase;
+    }
+    .meta-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 20px;
+      font-size: 13px;
+    }
+    .meta-item {
+      background: #f8fafc;
+      padding: 10px;
+      border-radius: 4px;
+      border-left: 3px solid #be123c;
+    }
+    .meta-item strong {
+      display: block;
+      color: #475569;
+      font-size: 11px;
+      text-transform: uppercase;
+    }
+    .alert-box {
+      background: #881337;
+      color: #ffffff;
+      padding: 15px;
+      border-radius: 6px;
+      margin: 20px 0;
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+  <div class="cert-border">
+    <div class="header">
+      <div class="logo">FORMAL CYBER-CRIME REFERRAL DOSSIER</div>
+      <div class="sublogo">Ministry of Home Affairs NCRP 1930 / SPF Anti-Scam Command</div>
+    </div>
+    <div class="title-banner">
+      <h2>CONFIRMED FRAUDULENT MONEY MULE ESCALATION DOCKET</h2>
+      <p style="margin: 4px 0 0; font-size: 12px; color: #475569;">Case Docket: ${caseId} | Time: ${dateStr}</p>
+    </div>
+    <div class="meta-grid">
+      <div class="meta-item">
+        <strong>Suspect Target Entity:</strong>
+        ${merchant}
+      </div>
+      <div class="meta-item">
+        <strong>Frozen Inflow Amount:</strong>
+        ${amountStr}
+      </div>
+      <div class="meta-item">
+        <strong>CLS Legitimacy Score:</strong>
+        <span style="color: #be123c; font-weight: bold;">${clsResult ? clsResult.totalScore : 125} / 900 (High-Probability Mule)</span>
+      </div>
+      <div class="meta-item">
+        <strong>Adjudication Finding:</strong>
+        Mismatched Proof of Sale / 110s Pass-Through Velocity
+      </div>
+    </div>
+    <div class="alert-box">
+      <strong>DIRECT JUDICIAL ACTION RECOMMENDED:</strong><br>
+      The account has failed Gemini 2.5 Flash commercial coherence checks. Timestamp mismatch, amount disparity, and 98% rapid withdrawal velocity detected within 110 seconds of credit. Permanent debit freeze enacted pursuant to statutory directions.
+    </div>
+    <p style="font-size: 11px; color: #64748b; margin-top: 30px; text-align: center;">
+      Transmitted to Central Law Enforcement Portal &bull; System Generated by NexusClear (Pramaan-AI)
+    </p>
+  </div>
+</body>
+</html>`;
+
+    const blob = new Blob([dossierHtml], { type: 'text/html;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `NCRP_Cyber_Crime_Escalation_${transaction?.id || 'MULE-CASE'}.html`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+
+    const printWindow = window.open(url, '_blank');
+    if (printWindow) printWindow.focus();
+
+    setRejectDossierSuccess(true);
+    setTimeout(() => setRejectDossierSuccess(false), 8000);
   };
 
   const handleApprove = () => {
     if (isApproveDisabled) return;
 
-    // Trigger celebratory enterprise fintech confetti
     try {
       confetti({
         particleCount: 120,
@@ -365,6 +512,7 @@ export const ActionBar: React.FC<ActionBarProps> = ({
     }
 
     setLastAction('approved');
+    approveCase('Statutory safe-harbor approval granted via Gemini 2.5 Flash validation.');
     onApprove();
     generateCertificateHtml();
   };
@@ -372,7 +520,9 @@ export const ActionBar: React.FC<ActionBarProps> = ({
   const handleReject = () => {
     if (isRejectDisabled) return;
     setLastAction('rejected');
+    rejectCase('Suspected money mule pass-through velocity flagged. Case referred to NCRP Cyber Crime Cell.');
     onReject();
+    generateEscalationDossierHtml();
   };
 
   return (
@@ -551,6 +701,25 @@ export const ActionBar: React.FC<ActionBarProps> = ({
           >
             <ExternalLink className="h-3 w-3" />
             View Audit Certificate
+          </button>
+        </div>
+      )}
+
+      {/* Rejection Escalation Banner */}
+      {lastAction === 'rejected' && (
+        <div className="p-3 rounded-lg bg-rose-950/70 border border-rose-500/50 flex items-center justify-between text-xs text-rose-300 animate-slide-up">
+          <div className="flex items-center gap-2">
+            <AlertTriangle className="h-4 w-4 text-rose-400 shrink-0" />
+            <span>
+              Case Escalated to State Cyber Crime Cell (NCRP 1930 / SPF ASC). Permanent debit freeze registered.
+            </span>
+          </div>
+          <button
+            onClick={generateEscalationDossierHtml}
+            className="flex items-center gap-1 px-2.5 py-1 rounded bg-rose-900/60 hover:bg-rose-800 text-white font-mono text-[11px] cursor-pointer shrink-0"
+          >
+            <Download className="h-3 w-3" />
+            Download Dossier
           </button>
         </div>
       )}

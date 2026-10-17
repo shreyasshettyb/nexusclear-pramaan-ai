@@ -30,6 +30,9 @@ export const BankDashboard: React.FC = () => {
     currentJurisdiction,
     runAuditPipeline,
     merchantEvidence,
+    adjudicationStatus,
+    approveCase,
+    rejectCase,
   } = useAppContext();
 
   const [isResolved, setIsResolved] = useState<boolean>(false);
@@ -38,21 +41,32 @@ export const BankDashboard: React.FC = () => {
 
   const jurisdictionConfig = getJurisdiction(currentJurisdiction);
 
-  // Reset resolution state if scenario changes
+  // Sync resolution state when scenario or global adjudication status changes
   useEffect(() => {
-    setIsResolved(false);
-    setResolutionTimeMs(null);
-    setEscalationNotice(false);
-  }, [currentScenario?.id]);
+    if (adjudicationStatus === 'approved') {
+      setIsResolved(true);
+      setResolutionTimeMs(1840);
+      setEscalationNotice(false);
+    } else if (adjudicationStatus === 'rejected') {
+      setIsResolved(false);
+      setEscalationNotice(true);
+    } else {
+      setIsResolved(false);
+      setResolutionTimeMs(null);
+      setEscalationNotice(false);
+    }
+  }, [currentScenario?.id, adjudicationStatus]);
 
   const handleApprove = () => {
     setIsResolved(true);
     setResolutionTimeMs(1840);
     setEscalationNotice(false);
+    approveCase('Statutory safe-harbor approval granted via Gemini 2.5 Flash validation.');
   };
 
   const handleReject = () => {
     setEscalationNotice(true);
+    rejectCase('Case escalated to State Cyber Crime Cell (NCRP 1930 / SPF ASC) due to pass-through velocity anomalies.');
   };
 
   const handleTriggerPipeline = () => {
@@ -141,14 +155,20 @@ export const BankDashboard: React.FC = () => {
             </div>
             <div className="flex items-baseline gap-2">
               <span className="text-xl sm:text-2xl font-black font-mono text-amber-400">
-                14 Active
+                {adjudicationStatus === 'approved' || adjudicationStatus === 'rejected' ? '13 Active' : '14 Active'}
               </span>
               <span className="text-[11px] font-mono text-slate-500">
                 (L1 - L4)
               </span>
             </div>
             <div className="text-[11px] text-amber-300/80 mt-1 flex items-center gap-1">
-              <span>₹1.42 Cr total frozen float</span>
+              <span>
+                {adjudicationStatus === 'approved'
+                  ? '₹1.40 Cr (-₹1,450 hold lifted)'
+                  : adjudicationStatus === 'rejected'
+                  ? '₹1.42 Cr (Permanent lien recorded)'
+                  : '₹1.42 Cr total frozen float'}
+              </span>
             </div>
           </div>
 
@@ -211,14 +231,18 @@ export const BankDashboard: React.FC = () => {
             </div>
             <div className="flex items-baseline gap-2">
               <span className="text-xl sm:text-2xl font-black font-mono text-teal-400">
-                1,284
+                {adjudicationStatus === 'approved' ? '1,285' : '1,284'}
               </span>
               <span className="text-[11px] font-mono text-teal-400/60">
                 Merchants
               </span>
             </div>
             <div className="text-[11px] text-teal-300/80 mt-1">
-              <span>Protected under safe-harbor rule</span>
+              <span>
+                {adjudicationStatus === 'approved'
+                  ? '✅ 1 Merchant Cleared Just Now'
+                  : 'Protected under safe-harbor rule'}
+              </span>
             </div>
           </div>
 

@@ -118,6 +118,9 @@ export interface DemoScenario {
 
 export type ViewMode = 'split' | 'merchant' | 'bank';
 
+export type MerchantLanguage = 'en' | 'kn' | 'hi';
+export type AdjudicationStatus = 'pending' | 'approved' | 'rejected';
+
 export interface AppState {
   currentJurisdiction: Jurisdiction;
   currentScenario: DemoScenario | null;
@@ -131,6 +134,10 @@ export interface AppState {
   processingStage: string;
   evidenceSubmitted: boolean;
   merchantEvidence: MerchantEvidence | null;
+  merchantLanguage: MerchantLanguage;
+  adjudicationStatus: AdjudicationStatus;
+  adjudicationNotes?: string;
+  adjudicatedAt?: string;
 }
 
 export interface AuditorDecision {

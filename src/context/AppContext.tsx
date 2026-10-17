@@ -7,6 +7,8 @@ import type {
   ViewMode,
   MerchantEvidence,
   AppState,
+  MerchantLanguage,
+  AdjudicationStatus,
 } from '../types';
 import { DEMO_SCENARIOS } from '../data/scenarios';
 import { runGeminiAudit } from '../services/geminiService';
@@ -26,6 +28,8 @@ export type AppAction =
   | { type: 'SET_VIEW'; payload: ViewMode }
   | { type: 'SUBMIT_EVIDENCE'; payload?: MerchantEvidence }
   | { type: 'SET_MERCHANT_EVIDENCE'; payload: MerchantEvidence | null }
+  | { type: 'SET_MERCHANT_LANGUAGE'; payload: MerchantLanguage }
+  | { type: 'ADJUDICATE_CASE'; payload: { decision: 'approved' | 'rejected'; notes?: string } }
   | { type: 'RESET_RESULTS' };
 
 // ==========================================
@@ -45,6 +49,9 @@ export interface AppContextValue extends AppState {
   setView: (view: ViewMode) => void;
   submitEvidence: (evidence?: MerchantEvidence) => void;
   setMerchantEvidence: (evidence: MerchantEvidence | null) => void;
+  setMerchantLanguage: (lang: MerchantLanguage) => void;
+  approveCase: (notes?: string) => void;
+  rejectCase: (notes?: string) => void;
   resetResults: () => void;
   runAuditPipeline: (customEvidence?: MerchantEvidence) => Promise<void>;
 }
@@ -86,6 +93,10 @@ export const initialState: AppState = {
   processingStage: '',
   evidenceSubmitted: false,
   merchantEvidence: defaultScenario ? { ...defaultScenario.evidence } : null,
+  merchantLanguage: 'kn', // Default to Kannada for Ramesh Medicals
+  adjudicationStatus: 'pending',
+  adjudicationNotes: undefined,
+  adjudicatedAt: undefined,
 };
 
 // ==========================================
@@ -114,6 +125,9 @@ export function appReducer(state: AppState, action: AppAction): AppState {
         geminiResult: null,
         isProcessing: false,
         processingStage: '',
+        adjudicationStatus: 'pending',
+        adjudicationNotes: undefined,
+        adjudicatedAt: undefined,
       };
     }
 
@@ -129,6 +143,11 @@ export function appReducer(state: AppState, action: AppAction): AppState {
         geminiResult: null,
         isProcessing: false,
         processingStage: '',
+        adjudicationStatus: 'pending',
+        adjudicationNotes: undefined,
+        adjudicatedAt: undefined,
+        // If Ramesh Medicals (Karnataka), default to Kannada
+        ...(scenario.id === 'ramesh-medicals' ? { merchantLanguage: 'kn' } : {}),
       };
     }
 
@@ -201,6 +220,38 @@ export function appReducer(state: AppState, action: AppAction): AppState {
         merchantEvidence: action.payload,
       };
 
+    case 'SET_MERCHANT_LANGUAGE':
+      return {
+        ...state,
+        merchantLanguage: action.payload,
+      };
+
+    case 'ADJUDICATE_CASE': {
+      const { decision, notes } = action.payload;
+      const updatedScenario = state.currentScenario
+        ? {
+            ...state.currentScenario,
+            transaction: {
+              ...state.currentScenario.transaction,
+              status: decision === 'approved' ? ('cleared' as const) : ('escalated' as const),
+              hopChain: state.currentScenario.transaction.hopChain.map((node) =>
+                node.type === 'merchant'
+                  ? { ...node, status: decision === 'approved' ? ('cleared' as const) : ('escalated' as const) }
+                  : node
+              ),
+            },
+          }
+        : null;
+
+      return {
+        ...state,
+        adjudicationStatus: decision,
+        adjudicationNotes: notes,
+        adjudicatedAt: new Date().toISOString(),
+        currentScenario: updatedScenario,
+      };
+    }
+
     case 'RESET_RESULTS':
       return {
         ...state,
@@ -209,6 +260,9 @@ export function appReducer(state: AppState, action: AppAction): AppState {
         evidenceSubmitted: false,
         isProcessing: false,
         processingStage: '',
+        adjudicationStatus: 'pending',
+        adjudicationNotes: undefined,
+        adjudicatedAt: undefined,
       };
 
     default:
@@ -239,7 +293,6 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     return () => window.removeEventListener('storage', handleStorage);
   }, []);
 
-  // Action dispatch helpers
   const setJurisdiction = useCallback((jurisdiction: Jurisdiction) => {
     dispatch({ type: 'SET_JURISDICTION', payload: jurisdiction });
   }, []);
@@ -282,6 +335,18 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
 
   const setMerchantEvidence = useCallback((evidence: MerchantEvidence | null) => {
     dispatch({ type: 'SET_MERCHANT_EVIDENCE', payload: evidence });
+  }, []);
+
+  const setMerchantLanguage = useCallback((lang: MerchantLanguage) => {
+    dispatch({ type: 'SET_MERCHANT_LANGUAGE', payload: lang });
+  }, []);
+
+  const approveCase = useCallback((notes?: string) => {
+    dispatch({ type: 'ADJUDICATE_CASE', payload: { decision: 'approved', notes } });
+  }, []);
+
+  const rejectCase = useCallback((notes?: string) => {
+    dispatch({ type: 'ADJUDICATE_CASE', payload: { decision: 'rejected', notes } });
   }, []);
 
   const resetResults = useCallback(() => {
@@ -401,6 +466,9 @@ export const AppProvider: React.FC<AppProviderProps> = ({ children }) => {
     setView,
     submitEvidence,
     setMerchantEvidence,
+    setMerchantLanguage,
+    approveCase,
+    rejectCase,
     resetResults,
     runAuditPipeline,
   };
