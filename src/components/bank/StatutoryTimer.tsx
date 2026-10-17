@@ -127,8 +127,8 @@ export const StatutoryTimer: React.FC<StatutoryTimerProps> = ({
       <div className={`flex flex-col gap-2.5 ${isResolved ? 'opacity-40 line-through' : ''}`}>
         {/* Customer Right-to-Livelihood Window */}
         <div className="rounded-2xl bg-[#131314] p-3 flex flex-col gap-1.5">
-          <div className="flex items-center justify-between text-xs">
-            <span className="text-white font-medium">1. Customer Safe-Harbor Window ({jurisdiction.slaCustomerDays}-Day Max)</span>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between text-xs gap-1">
+            <span className="text-white font-medium">1. Customer Window ({jurisdiction.slaCustomerDays}-Day Max)</span>
             <span className="font-mono text-[#81c995]">
               {customerSLA.days}d {customerSLA.hours}h {customerSLA.minutes}m remaining
             </span>
@@ -143,8 +143,8 @@ export const StatutoryTimer: React.FC<StatutoryTimerProps> = ({
 
         {/* Bank SLA Window */}
         <div className="rounded-2xl bg-[#131314] p-3 flex flex-col gap-1.5">
-          <div className="flex items-center justify-between text-xs">
-            <span className="text-white font-medium">2. Bank Evidence Review SLA ({jurisdiction.slaBankDays}-Day Max)</span>
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between text-xs gap-1">
+            <span className="text-white font-medium">2. Bank Review SLA ({jurisdiction.slaBankDays}-Day Max)</span>
             <span className="font-mono text-[#fdd663]">
               {bankSLA.days}d {bankSLA.hours}h {bankSLA.minutes}m remaining
             </span>

@@ -102,7 +102,7 @@ export const WaveformVisualizer: React.FC<WaveformVisualizerProps> = ({
     <div className={`w-full overflow-hidden select-none ${className}`}>
       <svg
         viewBox="0 0 320 60"
-        className="w-full h-[60px]"
+        className="w-full h-full"
         preserveAspectRatio="none"
         aria-label="Audio waveform visualization"
       >

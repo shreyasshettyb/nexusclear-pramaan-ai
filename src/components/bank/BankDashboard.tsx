@@ -73,23 +73,23 @@ export const BankDashboard: React.FC = () => {
       {/* ========================================================= */}
       {/* 1. TOP COMMAND BAR: Case Identity & Status                */}
       {/* ========================================================= */}
-      <div className="rounded-3xl bg-[#1e1f20] border border-[#333538] p-5 sm:p-6 shadow-sm flex flex-col gap-3">
+      <div className="rounded-3xl bg-[#1e1f20] border border-[#333538] p-4 sm:p-6 shadow-sm flex flex-col gap-3">
         <div className="flex flex-col md:flex-row md:items-center justify-between gap-3">
-          <div className="flex items-center gap-2.5">
+          <div className="flex items-center gap-2.5 min-w-0">
             <div className="flex h-10 w-10 items-center justify-center rounded-full bg-[#1b3a5b] text-[#8ab4f8] shrink-0">
               <Building2 className="h-5 w-5" />
             </div>
-            <div>
+            <div className="min-w-0 flex-1">
               <div className="flex items-center gap-2 flex-wrap">
-                <h1 className="text-base sm:text-lg font-bold text-white tracking-tight">
+                <h1 className="text-sm sm:text-lg font-bold text-white tracking-tight truncate">
                   Bank Compliance Command Center
                 </h1>
                 <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full bg-[#131314] border border-[#2d2f31] text-[11px] font-medium text-[#9aa0a6]">
                   <span>{jurisdictionConfig.flag}</span>
-                  <span>{jurisdictionConfig.name}</span>
+                  <span className="hidden sm:inline">{jurisdictionConfig.name}</span>
                 </span>
               </div>
-              <p className="text-xs text-[#9aa0a6]">
+              <p className="text-xs text-[#9aa0a6] truncate">
                 {currentScenario ? `${currentScenario.name} • ${formatCurrency(currentScenario.transaction.amount, currentJurisdiction)} Hold` : 'Automated Cyber Lien Adjudication'}
               </p>
             </div>
@@ -174,24 +174,26 @@ export const BankDashboard: React.FC = () => {
           <button
             type="button"
             onClick={() => setActiveTab('evidence')}
-            className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer ${
+            className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer ${
               activeTab === 'evidence'
                 ? 'bg-[#1e1f20] text-white border border-[#333538] shadow-xs'
                 : 'text-[#9aa0a6] hover:text-white'
             }`}
           >
-            Adjudication &amp; Evidence Audit
+            <span className="hidden sm:inline">Adjudication &amp; Evidence Audit</span>
+            <span className="sm:hidden">Adjudication</span>
           </button>
           <button
             type="button"
             onClick={() => setActiveTab('forensics')}
-            className={`px-3.5 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer ${
+            className={`px-3 py-1.5 rounded-full text-xs font-semibold transition-all cursor-pointer ${
               activeTab === 'forensics'
                 ? 'bg-[#1e1f20] text-white border border-[#333538] shadow-xs'
                 : 'text-[#9aa0a6] hover:text-white'
             }`}
           >
-            Hop-Chain Forensics &amp; SLA
+            <span className="hidden sm:inline">Hop-Chain Forensics &amp; SLA</span>
+            <span className="sm:hidden">Forensics &amp; SLA</span>
           </button>
         </div>
 

@@ -28,13 +28,13 @@ const AppContent: React.FC = () => {
         )}
 
         {currentView === 'merchant' && (
-          <div className="h-[calc(100vh-3.5rem)] w-full overflow-y-auto flex items-start justify-center p-4 sm:p-6 custom-scrollbar">
-            <MerchantApp className="max-w-lg" />
+          <div className="h-[calc(100dvh-3.5rem)] w-full overflow-y-auto flex items-start justify-center p-2 sm:p-6 custom-scrollbar">
+            <MerchantApp className="max-w-lg w-full" />
           </div>
         )}
 
         {currentView === 'bank' && (
-          <div className="h-[calc(100vh-3.5rem)] w-full overflow-y-auto p-4 sm:p-6 custom-scrollbar">
+          <div className="h-[calc(100dvh-3.5rem)] w-full overflow-y-auto p-2 sm:p-6 custom-scrollbar">
             <div className="w-full max-w-7xl mx-auto">
               <BankDashboard />
             </div>

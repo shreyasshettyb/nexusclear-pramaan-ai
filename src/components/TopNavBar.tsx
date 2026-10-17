@@ -72,25 +72,25 @@ export const TopNavBar: React.FC = () => {
   ];
 
   return (
-    <header className="sticky top-0 z-40 h-14 w-full bg-[#131314] border-b border-[#2d2f31] px-4 sm:px-6">
-      <div className="mx-auto flex h-full max-w-7xl items-center justify-between gap-3">
+    <header className="sticky top-0 z-40 h-14 w-full bg-[#131314] border-b border-[#2d2f31] px-3 sm:px-6">
+      <div className="mx-auto flex h-full max-w-7xl items-center justify-between gap-2 sm:gap-3">
         
         {/* LEFT: Clean Logo */}
-        <div className="flex items-center gap-2.5 shrink-0">
+        <div className="flex items-center gap-2 shrink-0">
           <div className="flex h-8 w-8 items-center justify-center rounded-full bg-[#1b3a5b] text-[#8ab4f8]">
             <Shield className="h-4 w-4 text-[#8ab4f8]" />
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-1.5">
             <span className="font-semibold text-sm sm:text-base tracking-tight text-white">
               Nexus<span className="text-[#8ab4f8]">Clear</span>
             </span>
-            <span className="rounded-full bg-[#1e1f20] px-2 py-0.5 text-[10.5px] font-medium text-[#9aa0a6] border border-[#333538]">
+            <span className="hidden sm:inline rounded-full bg-[#1e1f20] px-2 py-0.5 text-[10.5px] font-medium text-[#9aa0a6] border border-[#333538]">
               Pramaan-AI
             </span>
           </div>
         </div>
 
-        {/* CENTER: Google Segmented Pill Switch */}
+        {/* CENTER: Google Segmented Pill Switch (Hidden on mobile < sm) */}
         <div className="hidden sm:flex items-center rounded-full bg-[#1e1f20] p-1 border border-[#333538]">
           {viewTabs.map((tab) => {
             const Icon = tab.icon;
@@ -114,10 +114,10 @@ export const TopNavBar: React.FC = () => {
         </div>
 
         {/* RIGHT: Cases & Jurisdiction Controls */}
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1.5 sm:gap-2">
           
-          {/* Quick Scenario Dropdown */}
-          <div className="relative" ref={scenarioRef}>
+          {/* Quick Scenario Dropdown (Hidden on mobile < sm to save space, already available in Merchant cards) */}
+          <div className="relative hidden sm:block" ref={scenarioRef}>
             <button
               type="button"
               onClick={() => setScenarioDropdownOpen(!scenarioDropdownOpen)}
@@ -127,7 +127,7 @@ export const TopNavBar: React.FC = () => {
               <span className="text-xs">
                 {currentScenario?.id === 'ramesh-medicals' ? '🏥' : currentScenario?.id === 'uncle-tan-chicken-rice' ? '🍗' : '🚩'}
               </span>
-              <span className="max-w-[120px] truncate hidden md:inline">
+              <span className="max-w-[100px] truncate hidden md:inline">
                 {currentScenario?.name.split(' ')[0] ?? 'Demo Case'}
               </span>
               <ChevronDown
@@ -181,16 +181,16 @@ export const TopNavBar: React.FC = () => {
             )}
           </div>
 
-          {/* Jurisdiction Dropdown */}
+          {/* Jurisdiction Dropdown (Flag only on mobile, flag + text on sm+) */}
           <div className="relative" ref={jurisdictionRef}>
             <button
               type="button"
               onClick={() => setJurisdictionDropdownOpen(!jurisdictionDropdownOpen)}
-              className="flex items-center gap-1.5 rounded-full bg-[#1e1f20] hover:bg-[#28292a] px-3 py-1 text-xs font-medium text-[#e3e3e3] border border-[#333538] transition-all cursor-pointer"
+              className="flex items-center gap-1 sm:gap-1.5 rounded-full bg-[#1e1f20] hover:bg-[#28292a] px-2.5 sm:px-3 py-1 text-xs font-medium text-[#e3e3e3] border border-[#333538] transition-all cursor-pointer"
               title="Select Regulatory Regime"
             >
               <span>{activeJurisdictionConfig.flag}</span>
-              <span className="hidden lg:inline">{activeJurisdictionConfig.name.split(' ')[0]}</span>
+              <span className="hidden sm:inline">{activeJurisdictionConfig.name.split(' ')[0]}</span>
               <ChevronDown
                 className={`h-3 w-3 text-[#9aa0a6] transition-transform duration-200 ${
                   jurisdictionDropdownOpen ? 'rotate-180' : ''
@@ -233,29 +233,29 @@ export const TopNavBar: React.FC = () => {
             )}
           </div>
 
-          {/* Gemini AI Status Badge */}
+          {/* Gemini AI Status Badge (Compact on mobile) */}
           <button
             type="button"
             onClick={() => toggleApiKeyModal(true)}
-            className="flex items-center gap-1.5 rounded-full px-2.5 py-1 text-xs font-medium border border-[#333538] bg-[#1e1f20] hover:bg-[#28292a] transition-all cursor-pointer"
+            className="flex items-center gap-1 sm:gap-1.5 rounded-full px-2 sm:px-2.5 py-1 text-xs font-medium border border-[#333538] bg-[#1e1f20] hover:bg-[#28292a] transition-all cursor-pointer"
             title="Configure Gemini API Key"
           >
             <span
-              className={`h-2 w-2 rounded-full ${
+              className={`h-2 w-2 rounded-full shrink-0 ${
                 isLiveGemini ? 'bg-[#81c995] animate-pulse' : 'bg-[#fdd663]'
               }`}
             />
-            <span className="hidden xl:inline text-[#e3e3e3]">
-              {isLiveGemini ? 'Gemini 2.5 Flash' : 'Simulator Mode'}
+            <span className="hidden md:inline text-[#e3e3e3]">
+              {isLiveGemini ? 'Gemini 2.5' : 'Simulator'}
             </span>
-            <Zap className="h-3 w-3 text-[#8ab4f8]" />
+            <Zap className="h-3 w-3 text-[#8ab4f8] shrink-0" />
           </button>
 
           {/* Settings Cog */}
           <button
             type="button"
             onClick={() => toggleApiKeyModal(true)}
-            className="p-1.5 rounded-full bg-[#1e1f20] hover:bg-[#28292a] text-[#9aa0a6] hover:text-white border border-[#333538] transition-colors cursor-pointer"
+            className="p-1.5 rounded-full bg-[#1e1f20] hover:bg-[#28292a] text-[#9aa0a6] hover:text-white border border-[#333538] transition-colors cursor-pointer shrink-0"
             title="API Settings"
           >
             <Settings className="h-4 w-4" />

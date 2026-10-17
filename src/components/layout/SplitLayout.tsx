@@ -15,8 +15,23 @@ export const SplitLayout: React.FC<SplitLayoutProps> = ({
   const [splitRatio, setSplitRatio] = useState<number>(defaultSplit);
   const [isDragging, setIsDragging] = useState<boolean>(false);
   const [mobileTab, setMobileTab] = useState<'merchant' | 'bank'>('merchant');
+  const [isDesktop, setIsDesktop] = useState<boolean>(() => {
+    if (typeof window !== 'undefined') {
+      return window.innerWidth >= 768;
+    }
+    return true;
+  });
 
   const containerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth >= 768);
+    };
+    handleResize();
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const handleMouseDown = useCallback((e: React.MouseEvent) => {
     e.preventDefault();
@@ -69,29 +84,29 @@ export const SplitLayout: React.FC<SplitLayoutProps> = ({
   }, [isDragging]);
 
   return (
-    <div className="flex flex-col h-[calc(100vh-3.5rem)] w-full overflow-hidden bg-[#131314]">
-      {/* Mobile Segmented Switcher (< md) */}
-      <div className="flex md:hidden items-center justify-center p-2 bg-[#1e1f20] border-b border-[#2d2f31] shrink-0">
-        <div className="flex w-full max-w-xs rounded-full bg-[#131314] p-1 border border-[#333538]">
+    <div className="flex flex-col h-[calc(100dvh-3.5rem)] w-full overflow-hidden bg-[#131314]">
+      {/* Mobile Tab Switcher (< md) */}
+      <div className="flex md:hidden items-center justify-center p-2.5 bg-[#1e1f20] border-b border-[#2d2f31] shrink-0">
+        <div className="flex w-full max-w-sm rounded-full bg-[#131314] p-1 border border-[#333538]">
           <button
             type="button"
             onClick={() => setMobileTab('merchant')}
             className={`flex-1 flex items-center justify-center gap-1.5 py-1.5 rounded-full text-xs font-medium transition-all cursor-pointer ${
               mobileTab === 'merchant'
-                ? 'bg-[#8ab4f8] text-[#002b4f] font-semibold'
-                : 'text-[#9aa0a6]'
+                ? 'bg-[#8ab4f8] text-[#002b4f] font-semibold shadow-xs'
+                : 'text-[#9aa0a6] hover:text-white'
             }`}
           >
             <Smartphone className="h-3.5 w-3.5" />
-            <span>Merchant</span>
+            <span>Merchant App</span>
           </button>
           <button
             type="button"
             onClick={() => setMobileTab('bank')}
             className={`flex-1 flex items-center justify-center gap-1.5 py-1.5 rounded-full text-xs font-medium transition-all cursor-pointer ${
               mobileTab === 'bank'
-                ? 'bg-[#8ab4f8] text-[#002b4f] font-semibold'
-                : 'text-[#9aa0a6]'
+                ? 'bg-[#8ab4f8] text-[#002b4f] font-semibold shadow-xs'
+                : 'text-[#9aa0a6] hover:text-white'
             }`}
           >
             <Monitor className="h-3.5 w-3.5" />
@@ -103,19 +118,19 @@ export const SplitLayout: React.FC<SplitLayoutProps> = ({
       {/* Split-Screen Workspace */}
       <div
         ref={containerRef}
-        className="relative flex-1 flex flex-col md:flex-row w-full h-full overflow-hidden p-3 gap-0"
+        className="relative flex-1 flex flex-col md:flex-row w-full h-full overflow-hidden p-2 sm:p-3 gap-0"
       >
-        {/* Left Panel: Merchant App */}
+        {/* Left Panel: Merchant App (Full 100% on mobile, splitRatio on desktop) */}
         <div
-          style={{ width: `${splitRatio}%` }}
-          className={`h-full overflow-y-auto custom-scrollbar flex flex-col items-center justify-start pr-0 md:pr-2 ${
-            mobileTab === 'merchant' ? 'flex w-full md:w-auto' : 'hidden md:flex'
+          style={isDesktop ? { width: `${splitRatio}%` } : { width: '100%' }}
+          className={`h-full overflow-y-auto custom-scrollbar flex flex-col items-center justify-start w-full pr-0 md:pr-2 ${
+            mobileTab === 'merchant' ? 'flex' : 'hidden md:flex'
           }`}
         >
           {leftPanel}
         </div>
 
-        {/* Minimalist Resizer Handle */}
+        {/* Minimalist Resizer Handle (Desktop Only) */}
         <div
           onMouseDown={handleMouseDown}
           onTouchStart={handleTouchStart}
@@ -136,11 +151,11 @@ export const SplitLayout: React.FC<SplitLayoutProps> = ({
           </div>
         </div>
 
-        {/* Right Panel: Bank Console */}
+        {/* Right Panel: Bank Console (Full 100% on mobile, 100 - splitRatio on desktop) */}
         <div
-          style={{ width: `${100 - splitRatio}%` }}
-          className={`h-full overflow-y-auto custom-scrollbar flex flex-col pl-0 md:pl-2 ${
-            mobileTab === 'bank' ? 'flex w-full md:w-auto' : 'hidden md:flex'
+          style={isDesktop ? { width: `${100 - splitRatio}%` } : { width: '100%' }}
+          className={`h-full overflow-y-auto custom-scrollbar flex flex-col w-full pl-0 md:pl-2 ${
+            mobileTab === 'bank' ? 'flex' : 'hidden md:flex'
           }`}
         >
           {rightPanel}

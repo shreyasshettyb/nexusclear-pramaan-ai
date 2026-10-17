@@ -226,21 +226,21 @@ export const MerchantApp: React.FC<MerchantAppProps> = ({
   return (
     <div className={`w-full max-w-lg mx-auto ${className}`}>
       {/* Google Material Surface Container */}
-      <div className="rounded-3xl bg-[#1e1f20] border border-[#333538] p-5 sm:p-6 shadow-sm flex flex-col gap-4 text-[#e3e3e3]">
+      <div className="rounded-3xl bg-[#1e1f20] border border-[#333538] p-4 sm:p-6 shadow-sm flex flex-col gap-4 text-[#e3e3e3]">
         
         {/* ========================================================= */}
         {/* 1. HEADER: Merchant Identity & Language Switcher          */}
         {/* ========================================================= */}
-        <div className="flex items-center justify-between gap-3 pb-3 border-b border-[#2d2f31]">
-          <div className="flex items-center gap-2.5">
-            <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#1b3a5b] text-[#8ab4f8]">
+        <div className="flex items-center justify-between gap-2.5 pb-3 border-b border-[#2d2f31]">
+          <div className="flex items-center gap-2.5 min-w-0 flex-1">
+            <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#1b3a5b] text-[#8ab4f8] shrink-0">
               <Store className="h-4 w-4" />
             </div>
-            <div>
-              <h2 className="text-sm font-semibold text-white leading-tight">
+            <div className="min-w-0 flex-1">
+              <h2 className="text-sm font-semibold text-white leading-tight truncate">
                 {currentScenario?.transaction.merchantName || t.portalTitle}
               </h2>
-              <p className="text-[11px] text-[#9aa0a6]">
+              <p className="text-[11px] text-[#9aa0a6] truncate">
                 {currentScenario ? `${currentScenario.transaction.merchantCategory} • ${currentScenario.transaction.merchantAddress}` : t.portalSubtitle}
               </p>
             </div>

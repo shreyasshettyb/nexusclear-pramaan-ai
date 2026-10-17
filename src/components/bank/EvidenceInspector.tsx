@@ -40,10 +40,10 @@ export const EvidenceInspector: React.FC<EvidenceInspectorProps> = ({
   const hasDiscrepancies = (geminiResult?.discrepancy_flags?.length ?? 0) > 0;
 
   return (
-    <div className="rounded-3xl bg-[#1e1f20] border border-[#333538] p-5 sm:p-6 shadow-sm flex flex-col gap-4 text-[#e3e3e3]">
+    <div className="rounded-3xl bg-[#1e1f20] border border-[#333538] p-4 sm:p-6 shadow-sm flex flex-col gap-4 text-[#e3e3e3]">
       
       {/* Header */}
-      <div className="flex items-center justify-between pb-3 border-b border-[#2d2f31]">
+      <div className="flex items-center justify-between pb-3 border-b border-[#2d2f31] flex-wrap gap-2">
         <div className="flex items-center gap-2.5">
           <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#1b3a5b] text-[#8ab4f8]">
             <FileSearch className="h-4 w-4" />
