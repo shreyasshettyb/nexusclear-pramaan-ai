@@ -72,38 +72,35 @@ export const EvidenceInspector: React.FC<EvidenceInspectorProps> = ({
   const scoreTheme = getScoreColor(aiScore);
 
   return (
-    <div className="rounded-xl bg-slate-900/80 border border-slate-700/50 p-5 sm:p-6 shadow-xl backdrop-blur-md relative overflow-hidden flex flex-col gap-5">
-      {/* Background ambient glow */}
-      <div className="absolute top-1/2 -right-20 w-60 h-60 bg-emerald-500/5 rounded-full blur-3xl pointer-events-none" />
-
+    <div className="rounded-2xl bg-[#1d2024] border border-[#2d3036] p-5 sm:p-6 shadow-sm relative overflow-hidden flex flex-col gap-5">
       {/* Header bar */}
-      <div className="flex items-center justify-between border-b border-slate-800 pb-3 flex-wrap gap-2">
+      <div className="flex items-center justify-between border-b border-[#2d3036] pb-3 flex-wrap gap-2">
         <div className="flex items-center gap-2.5">
-          <div className="p-2 rounded-lg bg-emerald-500/10 border border-emerald-500/20 text-emerald-400">
+          <div className="p-2 rounded-xl bg-[#131314] border border-[#2d3036] text-[#8ab4f8]">
             <FileSearch className="h-5 w-5" />
           </div>
           <div>
-            <h3 className="text-base sm:text-lg font-bold text-slate-100 flex items-center gap-2">
+            <h3 className="text-base sm:text-lg font-bold text-white flex items-center gap-2">
               Multimodal Evidence Audit
-              <span className="text-xs font-mono font-medium px-2 py-0.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20">
+              <span className="text-xs font-mono font-medium px-2.5 py-0.5 rounded-full bg-[#131314] text-[#81c995] border border-[#81c995]/30">
                 Gemini 2.5 Flash Vision &amp; Audio
               </span>
             </h3>
-            <p className="text-xs text-slate-400">
+            <p className="text-xs text-[#8e918f]">
               Cross-reconciliation of raw ledger transaction vs. merchant cryptographic proof
             </p>
           </div>
         </div>
 
         {/* AI Evidence Score Bar in Header */}
-        <div className="flex items-center gap-3 bg-slate-950 px-3 py-1.5 rounded-lg border border-slate-800">
+        <div className="flex items-center gap-3 bg-[#131314] px-3 py-1.5 rounded-full border border-[#2d3036]">
           <div className="text-right">
-            <span className="text-[10px] text-slate-500 uppercase block font-mono">AI Evidence Score</span>
+            <span className="text-[10px] text-[#8e918f] uppercase block font-mono">AI Evidence Score</span>
             <span className={`text-xs font-mono font-bold ${scoreTheme.text}`}>
-              {aiScore} <span className="text-slate-500 text-[10px]">/ 350</span>
+              {aiScore} <span className="text-[#8e918f] text-[10px]">/ 350</span>
             </span>
           </div>
-          <div className="w-16 bg-slate-800 rounded-full h-2 overflow-hidden">
+          <div className="w-16 bg-[#2d3036] rounded-full h-1.5 overflow-hidden">
             <div
               className={`h-full rounded-full transition-all duration-700 ${scoreTheme.bar}`}
               style={{ width: `${scorePct}%` }}
@@ -118,89 +115,89 @@ export const EvidenceInspector: React.FC<EvidenceInspectorProps> = ({
         {/* ========================================================= */}
         {/* LEFT COLUMN: Flagged Transaction Metadata                 */}
         {/* ========================================================= */}
-        <div className="rounded-xl bg-slate-950/80 border border-slate-800 p-4 flex flex-col gap-3">
-          <div className="flex items-center justify-between border-b border-slate-800/80 pb-2">
-            <span className="text-xs font-bold text-slate-200 uppercase tracking-wider flex items-center gap-1.5">
-              <Building className="h-4 w-4 text-sky-400" />
+        <div className="rounded-2xl bg-[#131314] border border-[#2d3036] p-4 flex flex-col gap-3">
+          <div className="flex items-center justify-between border-b border-[#2d3036] pb-2">
+            <span className="text-xs font-medium text-white uppercase tracking-wider flex items-center gap-1.5">
+              <Building className="h-4 w-4 text-[#8ab4f8]" />
               Flagged Transaction Metadata
             </span>
-            <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-rose-500/15 text-rose-300 border border-rose-500/30 uppercase font-semibold">
+            <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#f28b82]/10 text-[#f28b82] border border-[#f28b82]/30 uppercase font-medium">
               Frozen Lien
             </span>
           </div>
 
           <div className="space-y-2.5 text-xs">
             {/* Transaction ID */}
-            <div className="flex items-center justify-between bg-slate-900/60 p-2 rounded-lg border border-slate-800/60">
-              <span className="text-slate-400">Transaction ID:</span>
-              <div className="flex items-center gap-1.5 font-mono text-slate-200">
+            <div className="flex items-center justify-between bg-[#1d2024] p-2.5 rounded-xl border border-[#2d3036]">
+              <span className="text-[#8e918f]">Transaction ID:</span>
+              <div className="flex items-center gap-1.5 font-mono text-white">
                 <span>{transaction.id}</span>
                 <button
                   onClick={() => copyTxnId(transaction.id)}
-                  className="p-1 hover:bg-slate-800 rounded text-slate-400 hover:text-slate-200 cursor-pointer"
+                  className="p-1 hover:bg-[#2d3036] rounded-full text-[#8e918f] hover:text-white cursor-pointer transition-colors"
                   title="Copy Transaction ID"
                 >
-                  {copiedId ? <Check className="h-3 w-3 text-emerald-400" /> : <Copy className="h-3 w-3" />}
+                  {copiedId ? <Check className="h-3 w-3 text-[#81c995]" /> : <Copy className="h-3 w-3" />}
                 </button>
               </div>
             </div>
 
             {/* Frozen Amount */}
-            <div className="flex items-center justify-between bg-slate-900/60 p-2 rounded-lg border border-slate-800/60">
-              <span className="text-slate-400">Lien Hold Amount:</span>
-              <span className="font-mono text-sm font-bold text-rose-400">
+            <div className="flex items-center justify-between bg-[#1d2024] p-2.5 rounded-xl border border-[#2d3036]">
+              <span className="text-[#8e918f]">Lien Hold Amount:</span>
+              <span className="font-mono text-sm font-bold text-[#f28b82]">
                 {formatCurrency(transaction.amount, transaction.jurisdiction)}
               </span>
             </div>
 
             {/* Timestamp */}
-            <div className="flex items-center justify-between bg-slate-900/60 p-2 rounded-lg border border-slate-800/60">
-              <span className="text-slate-400 flex items-center gap-1">
-                <Calendar className="h-3 w-3 text-slate-500" /> Timestamp:
+            <div className="flex items-center justify-between bg-[#1d2024] p-2.5 rounded-xl border border-[#2d3036]">
+              <span className="text-[#8e918f] flex items-center gap-1">
+                <Calendar className="h-3 w-3 text-[#8e918f]" /> Timestamp:
               </span>
-              <span className="font-mono text-slate-300 text-[11px]">
+              <span className="font-mono text-[#c4c7c5] text-[11px]">
                 {new Date(transaction.timestamp).toLocaleString()}
               </span>
             </div>
 
             {/* Merchant Info */}
-            <div className="flex items-center justify-between bg-slate-900/60 p-2 rounded-lg border border-slate-800/60">
-              <span className="text-slate-400">Merchant Entity:</span>
-              <span className="font-semibold text-slate-200 truncate max-w-[170px]" title={transaction.merchantName}>
+            <div className="flex items-center justify-between bg-[#1d2024] p-2.5 rounded-xl border border-[#2d3036]">
+              <span className="text-[#8e918f]">Merchant Entity:</span>
+              <span className="font-medium text-white truncate max-w-[170px]" title={transaction.merchantName}>
                 {transaction.merchantName}
               </span>
             </div>
 
             {/* Merchant Category */}
-            <div className="flex items-center justify-between bg-slate-900/60 p-2 rounded-lg border border-slate-800/60">
-              <span className="text-slate-400">Registered MCC:</span>
-              <span className="text-slate-300 font-mono text-[11px]">
+            <div className="flex items-center justify-between bg-[#1d2024] p-2.5 rounded-xl border border-[#2d3036]">
+              <span className="text-[#8e918f]">Registered MCC:</span>
+              <span className="text-[#c4c7c5] font-mono text-[11px]">
                 {transaction.merchantCategory}
               </span>
             </div>
 
             {/* Hop Layer */}
-            <div className="flex items-center justify-between bg-slate-900/60 p-2 rounded-lg border border-slate-800/60">
-              <span className="text-slate-400 flex items-center gap-1">
-                <Layers className="h-3 w-3 text-slate-500" /> Hop Chain Layer:
+            <div className="flex items-center justify-between bg-[#1d2024] p-2.5 rounded-xl border border-[#2d3036]">
+              <span className="text-[#8e918f] flex items-center gap-1">
+                <Layers className="h-3 w-3 text-[#8e918f]" /> Hop Chain Layer:
               </span>
-              <span className="font-mono px-2 py-0.5 rounded bg-slate-800 text-sky-400 font-semibold text-[11px]">
+              <span className="font-mono px-2 py-0.5 rounded-full bg-[#131314] text-[#8ab4f8] font-medium text-[11px] border border-[#2d3036]">
                 Layer {transaction.layerNumber} (Terminal Retail POS)
               </span>
             </div>
 
             {/* Regulatory Reference */}
-            <div className="flex items-center justify-between bg-slate-900/60 p-2 rounded-lg border border-slate-800/60">
-              <span className="text-slate-400">Regulatory Ref:</span>
-              <span className="font-mono text-[11px] text-amber-300 truncate max-w-[170px]" title={transaction.regulatoryReference}>
+            <div className="flex items-center justify-between bg-[#1d2024] p-2.5 rounded-xl border border-[#2d3036]">
+              <span className="text-[#8e918f]">Regulatory Ref:</span>
+              <span className="font-mono text-[11px] text-[#fdd663] truncate max-w-[170px]" title={transaction.regulatoryReference}>
                 {transaction.regulatoryReference}
               </span>
             </div>
           </div>
 
           {/* Frozen Reason Box */}
-          <div className="mt-1 p-2.5 rounded-lg bg-rose-950/20 border border-rose-900/40 text-[11px] text-rose-300/90">
-            <span className="font-semibold block text-rose-400 mb-0.5 font-mono">
+          <div className="mt-1 p-3 rounded-xl bg-[#2d1b1b] border border-[#f28b82]/30 text-[11px] text-[#f28b82]">
+            <span className="font-semibold block text-white mb-0.5 font-mono">
               Statutory Lien Order Trigger:
             </span>
             {transaction.frozenReason}
@@ -210,34 +207,34 @@ export const EvidenceInspector: React.FC<EvidenceInspectorProps> = ({
         {/* ========================================================= */}
         {/* RIGHT COLUMN: Gemini Extracted Evidence                   */}
         {/* ========================================================= */}
-        <div className="rounded-xl bg-slate-950/80 border border-slate-800 p-4 flex flex-col gap-3">
-          <div className="flex items-center justify-between border-b border-slate-800/80 pb-2">
-            <span className="text-xs font-bold text-slate-200 uppercase tracking-wider flex items-center gap-1.5">
-              <Eye className="h-4 w-4 text-emerald-400" />
+        <div className="rounded-2xl bg-[#131314] border border-[#2d3036] p-4 flex flex-col gap-3">
+          <div className="flex items-center justify-between border-b border-[#2d3036] pb-2">
+            <span className="text-xs font-medium text-white uppercase tracking-wider flex items-center gap-1.5">
+              <Eye className="h-4 w-4 text-[#81c995]" />
               Gemini Extracted Evidence
             </span>
-            <span className="text-[10px] font-mono px-2 py-0.5 rounded bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 font-semibold">
+            <span className="text-[10px] font-mono px-2 py-0.5 rounded-full bg-[#81c995]/10 text-[#81c995] border border-[#81c995]/30 font-medium">
               Vision &amp; NLP Parsed
             </span>
           </div>
 
           <div className="space-y-2.5 text-xs">
             {/* Amount Match with Match/Mismatch Indicator */}
-            <div className="flex items-center justify-between bg-slate-900/60 p-2 rounded-lg border border-slate-800/60">
-              <span className="text-slate-400">Extracted Receipt Total:</span>
+            <div className="flex items-center justify-between bg-[#1d2024] p-2.5 rounded-xl border border-[#2d3036]">
+              <span className="text-[#8e918f]">Extracted Receipt Total:</span>
               <div className="flex items-center gap-2">
-                <span className="font-mono text-sm font-bold text-slate-200">
+                <span className="font-mono text-sm font-bold text-white">
                   {extractedAmount !== null
                     ? formatCurrency(extractedAmount, transaction.jurisdiction)
                     : 'N/A'}
                 </span>
                 {amountMatch ? (
-                  <span className="flex items-center gap-1 text-[11px] font-mono text-emerald-400 font-semibold bg-emerald-500/20 px-1.5 py-0.5 rounded border border-emerald-500/40">
+                  <span className="flex items-center gap-1 text-[11px] font-mono text-[#81c995] font-medium bg-[#81c995]/10 px-2 py-0.5 rounded-full border border-[#81c995]/30">
                     <CheckCircle className="h-3.5 w-3.5" />
                     MATCH
                   </span>
                 ) : (
-                  <span className="flex items-center gap-1 text-[11px] font-mono text-rose-400 font-semibold bg-rose-500/20 px-1.5 py-0.5 rounded border border-rose-500/40">
+                  <span className="flex items-center gap-1 text-[11px] font-mono text-[#f28b82] font-medium bg-[#f28b82]/10 px-2 py-0.5 rounded-full border border-[#f28b82]/30">
                     <XCircle className="h-3.5 w-3.5" />
                     MISMATCH
                   </span>
@@ -246,11 +243,11 @@ export const EvidenceInspector: React.FC<EvidenceInspectorProps> = ({
             </div>
 
             {/* Amount Comparison Variance */}
-            <div className="flex items-center justify-between bg-slate-900/60 p-2 rounded-lg border border-slate-800/60 text-[11px]">
-              <span className="text-slate-400">Amount Variance Delta:</span>
+            <div className="flex items-center justify-between bg-[#1d2024] p-2.5 rounded-xl border border-[#2d3036] text-[11px]">
+              <span className="text-[#8e918f]">Amount Variance Delta:</span>
               <span
-                className={`font-mono font-semibold ${
-                  amountDiff.isExact ? 'text-emerald-400' : 'text-rose-400'
+                className={`font-mono font-medium ${
+                  amountDiff.isExact ? 'text-[#81c995]' : 'text-[#f28b82]'
                 }`}
               >
                 {amountDiff.diffText}
@@ -258,60 +255,60 @@ export const EvidenceInspector: React.FC<EvidenceInspectorProps> = ({
             </div>
 
             {/* Extracted Receipt Time */}
-            <div className="flex items-center justify-between bg-slate-900/60 p-2 rounded-lg border border-slate-800/60">
-              <span className="text-slate-400">Extracted POS Time:</span>
+            <div className="flex items-center justify-between bg-[#1d2024] p-2.5 rounded-xl border border-[#2d3036]">
+              <span className="text-[#8e918f]">Extracted POS Time:</span>
               <div className="flex items-center gap-1.5">
-                <span className="font-mono text-slate-300 text-[11px]">
+                <span className="font-mono text-[#c4c7c5] text-[11px]">
                   {geminiResult?.extracted_receipt_time
                     ? new Date(geminiResult.extracted_receipt_time).toLocaleString()
                     : 'Unspecified in Receipt'}
                 </span>
                 {geminiResult?.extracted_receipt_time ? (
-                  <CheckCircle className="h-3.5 w-3.5 text-emerald-400" />
+                  <CheckCircle className="h-3.5 w-3.5 text-[#81c995]" />
                 ) : (
-                  <AlertTriangle className="h-3.5 w-3.5 text-amber-400" />
+                  <AlertTriangle className="h-3.5 w-3.5 text-[#fdd663]" />
                 )}
               </div>
             </div>
 
             {/* Vernacular Audio / Statement Translation */}
-            <div className="bg-slate-900/60 p-2.5 rounded-lg border border-slate-800/60">
+            <div className="bg-[#1d2024] p-3 rounded-xl border border-[#2d3036]">
               <div className="flex items-center justify-between mb-1">
-                <span className="text-slate-400 flex items-center gap-1 font-semibold text-[11px]">
-                  <Languages className="h-3.5 w-3.5 text-sky-400" />
+                <span className="text-[#8e918f] flex items-center gap-1 font-medium text-[11px]">
+                  <Languages className="h-3.5 w-3.5 text-[#8ab4f8]" />
                   Vernacular Voice Statement (Translated):
                 </span>
-                <span className="text-[10px] font-mono text-slate-500 flex items-center gap-1">
+                <span className="text-[10px] font-mono text-[#8e918f] flex items-center gap-1">
                   <Volume2 className="h-3 w-3" /> Audio NLP
                 </span>
               </div>
-              <p className="text-[11px] text-slate-300 italic leading-relaxed bg-slate-950/60 p-2 rounded border border-slate-800/80">
+              <p className="text-[11px] text-[#c4c7c5] italic leading-relaxed bg-[#131314] p-2.5 rounded-lg border border-[#2d3036]">
                 &ldquo;{geminiResult?.vernacular_translation || evidence?.voiceStatement || 'No verbal testimony attached.'}&rdquo;
               </p>
             </div>
 
             {/* Visual Authenticity Notes */}
-            <div className="bg-slate-900/60 p-2.5 rounded-lg border border-slate-800/60">
-              <span className="text-slate-400 block font-semibold text-[11px] mb-1">
+            <div className="bg-[#1d2024] p-3 rounded-xl border border-[#2d3036]">
+              <span className="text-[#8e918f] block font-medium text-[11px] mb-1">
                 Visual Forensics &amp; Tax Invoice Verification:
               </span>
-              <p className="text-[11px] text-slate-300 leading-relaxed bg-slate-950/60 p-2 rounded border border-slate-800/80">
+              <p className="text-[11px] text-[#c4c7c5] leading-relaxed bg-[#131314] p-2.5 rounded-lg border border-[#2d3036]">
                 {geminiResult?.visual_authenticity_notes || 'Pending image receipt OCR and font analysis.'}
               </p>
             </div>
 
             {/* Discrepancy Flags */}
             {geminiResult?.discrepancy_flags && geminiResult.discrepancy_flags.length > 0 ? (
-              <div className="p-2.5 rounded-lg bg-rose-950/30 border border-rose-800/60 space-y-1">
-                <span className="text-xs font-bold text-rose-300 flex items-center gap-1">
-                  <AlertTriangle className="h-3.5 w-3.5 text-rose-400" />
+              <div className="p-3 rounded-xl bg-[#2d1b1b] border border-[#f28b82]/30 space-y-1.5">
+                <span className="text-xs font-medium text-[#f28b82] flex items-center gap-1">
+                  <AlertTriangle className="h-3.5 w-3.5 text-[#f28b82]" />
                   Critical Discrepancies Flagged ({geminiResult.discrepancy_flags.length})
                 </span>
                 <div className="space-y-1 pt-1">
                   {geminiResult.discrepancy_flags.map((flag, idx) => (
                     <div
                       key={idx}
-                      className="px-2 py-1 rounded bg-rose-900/40 border border-rose-700/50 text-[10px] font-mono text-rose-200"
+                      className="px-2.5 py-1 rounded-lg bg-[#3d2323] border border-[#f28b82]/30 text-[10px] font-mono text-[#f28b82]"
                     >
                       • {flag}
                     </div>
@@ -319,8 +316,8 @@ export const EvidenceInspector: React.FC<EvidenceInspectorProps> = ({
                 </div>
               </div>
             ) : (
-              <div className="p-2 rounded-lg bg-emerald-950/30 border border-emerald-800/50 flex items-center gap-2 text-xs text-emerald-300">
-                <ShieldCheck className="h-4 w-4 text-emerald-400" />
+              <div className="p-2.5 rounded-xl bg-[#1d2024] border border-[#81c995]/30 flex items-center gap-2 text-xs text-[#81c995]">
+                <ShieldCheck className="h-4 w-4 text-[#81c995]" />
                 <span>Zero forensic discrepancies detected across receipt and testimony</span>
               </div>
             )}
@@ -331,14 +328,14 @@ export const EvidenceInspector: React.FC<EvidenceInspectorProps> = ({
 
       {/* REGULATORY COMPLIANCE MEMO BLOCK */}
       {geminiResult?.regulatory_compliance_memo && (
-        <div className="rounded-xl bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950 border border-slate-700/80 p-4 shadow-md relative overflow-hidden">
-          <div className="flex items-center gap-2 mb-2 pb-2 border-b border-slate-800">
-            <FileText className="h-4 w-4 text-amber-400" />
-            <span className="text-xs font-bold text-amber-300 uppercase tracking-wider font-mono">
+        <div className="rounded-2xl bg-[#131314] border border-[#2d3036] p-4 shadow-sm relative overflow-hidden">
+          <div className="flex items-center gap-2 mb-2 pb-2 border-b border-[#2d3036]">
+            <FileText className="h-4 w-4 text-[#fdd663]" />
+            <span className="text-xs font-semibold text-white uppercase tracking-wider font-mono">
               Statutory Safe-Harbor Memorandum (Automated Legal Counsel Analysis)
             </span>
           </div>
-          <p className="text-xs text-slate-300 leading-relaxed font-sans">
+          <p className="text-xs text-[#c4c7c5] leading-relaxed font-sans">
             {geminiResult.regulatory_compliance_memo}
           </p>
         </div>
@@ -346,23 +343,23 @@ export const EvidenceInspector: React.FC<EvidenceInspectorProps> = ({
 
       {/* EVIDENCE ATTACHMENT THUMBNAILS (Clickable for full inspect) */}
       {evidence && (evidence.receiptImage || evidence.shopPhoto) && (
-        <div className="pt-2 border-t border-slate-800 flex items-center gap-4 flex-wrap">
-          <span className="text-xs text-slate-400 font-mono">Cryptographic Attachments:</span>
+        <div className="pt-2 border-t border-[#2d3036] flex items-center gap-3 flex-wrap">
+          <span className="text-xs text-[#8e918f] font-mono">Cryptographic Attachments:</span>
           {evidence.receiptImage && (
             <button
               onClick={() => setPreviewImage({ url: evidence.receiptImage, title: 'Proof-of-Sale Tax Invoice' })}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-950 border border-slate-700 hover:border-emerald-500/60 text-xs text-slate-300 hover:text-emerald-300 transition-colors cursor-pointer"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#131314] border border-[#2d3036] hover:border-[#81c995]/60 text-xs text-[#c4c7c5] hover:text-[#81c995] transition-colors cursor-pointer"
             >
-              <Eye className="h-3.5 w-3.5 text-emerald-400" />
+              <Eye className="h-3.5 w-3.5 text-[#81c995]" />
               <span>Inspect Tax Invoice</span>
             </button>
           )}
           {evidence.shopPhoto && (
             <button
               onClick={() => setPreviewImage({ url: evidence.shopPhoto!, title: 'Storefront & POS Geotag Verification' })}
-              className="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-950 border border-slate-700 hover:border-emerald-500/60 text-xs text-slate-300 hover:text-emerald-300 transition-colors cursor-pointer"
+              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#131314] border border-[#2d3036] hover:border-[#8ab4f8]/60 text-xs text-[#c4c7c5] hover:text-[#8ab4f8] transition-colors cursor-pointer"
             >
-              <Eye className="h-3.5 w-3.5 text-sky-400" />
+              <Eye className="h-3.5 w-3.5 text-[#8ab4f8]" />
               <span>Inspect Storefront &amp; POS</span>
             </button>
           )}

@@ -255,63 +255,56 @@ export const TransactionGraph: React.FC<TransactionGraphProps> = ({
   }, '');
 
   return (
-    <div className="rounded-xl bg-slate-900/80 border border-slate-700/50 p-5 sm:p-6 shadow-xl backdrop-blur-md relative overflow-hidden flex flex-col gap-4">
-      {/* Background ambient glow */}
-      <div
-        className={`absolute -top-24 -left-24 w-60 h-60 rounded-full blur-3xl pointer-events-none ${
-          isMule ? 'bg-rose-500/10' : 'bg-emerald-500/10'
-        }`}
-      />
-
+    <div className="rounded-2xl bg-[#1d2024] border border-[#2d3036] p-5 sm:p-6 shadow-sm relative overflow-hidden flex flex-col gap-4">
       {/* Header bar */}
-      <div className="flex items-center justify-between border-b border-slate-800 pb-3 flex-wrap gap-2">
+      <div className="flex items-center justify-between border-b border-[#2d3036] pb-3 flex-wrap gap-2">
         <div className="flex items-center gap-2.5">
           <div
-            className={`p-2 rounded-lg border ${
+            className={`p-2 rounded-xl border ${
               isMule
-                ? 'bg-rose-500/10 border-rose-500/20 text-rose-400'
-                : 'bg-emerald-500/10 border-emerald-500/20 text-emerald-400'
+                ? 'bg-[#f28b82]/10 border-[#f28b82]/30 text-[#f28b82]'
+                : 'bg-[#81c995]/10 border-[#81c995]/30 text-[#81c995]'
             }`}
           >
             <BarChart3 className="h-5 w-5" />
           </div>
           <div>
-            <h3 className="text-base sm:text-lg font-bold text-slate-100 flex items-center gap-2">
+            <h3 className="text-base sm:text-lg font-bold text-white flex items-center gap-2">
               Transaction Pattern Analysis (6-Month Rolling)
               <span
-                className={`text-xs font-mono font-medium px-2 py-0.5 rounded-full border ${
+                className={`text-xs font-mono font-medium px-2.5 py-0.5 rounded-full border ${
                   isMule
-                    ? 'bg-rose-500/15 text-rose-300 border-rose-500/30'
-                    : 'bg-emerald-500/15 text-emerald-300 border-emerald-500/30'
+                    ? 'bg-[#f28b82]/10 text-[#f28b82] border-[#f28b82]/30'
+                    : 'bg-[#81c995]/10 text-[#81c995] border-[#81c995]/30'
                 }`}
               >
                 {isMule ? 'High Variance / Mule Signature' : 'Gaussian Retail Curve (Natural)'}
               </span>
             </h3>
-            <p className="text-xs text-slate-400">
-              Entity: <span className="font-semibold text-slate-200">{merchantName}</span> &bull; 180-Day Volumetric &amp; Velocity Dispersion
+            <p className="text-xs text-[#8e918f]">
+              Entity: <span className="font-medium text-white">{merchantName}</span> &bull; 180-Day Volumetric &amp; Velocity Dispersion
             </p>
           </div>
         </div>
 
         {/* Forensic Stability Indicators */}
         <div className="flex items-center gap-3 text-xs font-mono">
-          <div className="flex items-center gap-1.5 bg-slate-950 px-2.5 py-1 rounded border border-slate-800">
-            <Activity className="h-3.5 w-3.5 text-slate-400" />
-            <span className="text-slate-400">Velocity Index:</span>
-            <span className={isMule ? 'text-rose-400 font-bold' : 'text-emerald-400 font-bold'}>
+          <div className="flex items-center gap-1.5 bg-[#131314] px-3 py-1 rounded-full border border-[#2d3036]">
+            <Activity className="h-3.5 w-3.5 text-[#8e918f]" />
+            <span className="text-[#8e918f]">Velocity Index:</span>
+            <span className={isMule ? 'text-[#f28b82] font-semibold' : 'text-[#81c995] font-semibold'}>
               {isMule ? '8.4% (Severe Spike)' : '97.2% (Stable)'}
             </span>
           </div>
 
-          <div className="flex items-center gap-1.5 bg-slate-950 px-2.5 py-1 rounded border border-slate-800">
+          <div className="flex items-center gap-1.5 bg-[#131314] px-3 py-1 rounded-full border border-[#2d3036]">
             {isMule ? (
-              <TrendingUp className="h-3.5 w-3.5 text-rose-400 animate-pulse" />
+              <TrendingUp className="h-3.5 w-3.5 text-[#f28b82] animate-pulse" />
             ) : (
-              <ShieldCheck className="h-3.5 w-3.5 text-emerald-400" />
+              <ShieldCheck className="h-3.5 w-3.5 text-[#81c995]" />
             )}
-            <span className="text-slate-400">Dormancy Risk:</span>
-            <span className={isMule ? 'text-rose-400 font-bold' : 'text-emerald-400 font-bold'}>
+            <span className="text-[#8e918f]">Dormancy Risk:</span>
+            <span className={isMule ? 'text-[#f28b82] font-semibold' : 'text-[#81c995] font-semibold'}>
               {isMule ? '90-Day Dormant' : 'Zero Dormancy'}
             </span>
           </div>
@@ -526,21 +519,21 @@ export const TransactionGraph: React.FC<TransactionGraphProps> = ({
       </div>
 
       {/* Forensic interpretation footer banner */}
-      <div className="pt-2 border-t border-slate-800 flex items-center justify-between flex-wrap gap-2 text-xs">
+      <div className="pt-2 border-t border-[#2d3036] flex items-center justify-between flex-wrap gap-2 text-xs">
         <div className="flex items-center gap-2">
           {isMule ? (
-            <span className="flex items-center gap-1.5 text-rose-400 font-semibold font-mono">
+            <span className="flex items-center gap-1.5 text-[#f28b82] font-medium font-mono">
               <AlertTriangle className="h-4 w-4" />
               ANOMALOUS PASS-THROUGH SPIKE: 90-day dormant shell activated for high-volume pass-through.
             </span>
           ) : (
-            <span className="flex items-center gap-1.5 text-emerald-400 font-semibold font-mono">
+            <span className="flex items-center gap-1.5 text-[#81c995] font-medium font-mono">
               <ShieldCheck className="h-4 w-4" />
               VERIFIED RETAIL DISTRIBUTION: Consistent monthly turnover across 750+ unique counterparties.
             </span>
           )}
         </div>
-        <span className="text-[11px] font-mono text-slate-500">
+        <span className="text-[11px] font-mono text-[#8e918f]">
           Source: NPCI / MAS Clearinghouse Transaction Logs
         </span>
       </div>

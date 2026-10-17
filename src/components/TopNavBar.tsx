@@ -9,7 +9,7 @@ import {
   Check,
   Zap,
   Globe,
-  Sliders,
+  SlidersHorizontal,
 } from 'lucide-react';
 import { useAppContext } from '../context/AppContext';
 import { JURISDICTION_LIST, formatCurrency } from '../data/jurisdictions';
@@ -26,7 +26,6 @@ export const TopNavBar: React.FC = () => {
     setView,
     isLiveGemini,
     toggleApiKeyModal,
-    isProcessing,
   } = useAppContext();
 
   const [jurisdictionDropdownOpen, setJurisdictionDropdownOpen] = useState(false);
@@ -35,7 +34,6 @@ export const TopNavBar: React.FC = () => {
   const jurisdictionRef = useRef<HTMLDivElement>(null);
   const scenarioRef = useRef<HTMLDivElement>(null);
 
-  // Close dropdowns on outside click
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
       if (
@@ -72,39 +70,39 @@ export const TopNavBar: React.FC = () => {
   const viewTabs: { id: ViewMode; label: string; icon: React.ComponentType<{ className?: string }> }[] = [
     { id: 'split', label: 'Split View', icon: Columns },
     { id: 'merchant', label: 'Merchant App', icon: Smartphone },
-    { id: 'bank', label: 'Bank Dashboard', icon: Monitor },
+    { id: 'bank', label: 'Bank Console', icon: Monitor },
   ];
 
   return (
-    <header className="sticky top-0 z-40 h-16 w-full bg-slate-900/95 backdrop-blur-md border-b border-slate-700/50 shadow-lg px-3 sm:px-6">
-      <div className="mx-auto flex h-full max-w-7xl items-center justify-between gap-2 sm:gap-4">
+    <header className="sticky top-0 z-40 h-16 w-full bg-[#111318] border-b border-[#2d3036] px-4 sm:px-6">
+      <div className="mx-auto flex h-full max-w-7xl items-center justify-between gap-3">
         
         {/* ========================================== */}
-        {/* LEFT: Logo & Branding                      */}
+        {/* LEFT: Google Cloud / NexusClear Logo       */}
         {/* ========================================== */}
         <div className="flex items-center gap-3 shrink-0">
-          <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-gradient-to-br from-emerald-500/20 via-emerald-600/10 to-transparent border border-emerald-500/40 shadow-inner group">
-            <Shield className="h-5 w-5 text-emerald-400 group-hover:scale-110 transition-transform duration-300" />
+          <div className="flex h-9 w-9 items-center justify-center rounded-full bg-[#1e232d] border border-[#3c4048] text-[#8ab4f8]">
+            <Shield className="h-4.5 w-4.5 text-[#8ab4f8]" />
           </div>
           <div className="flex flex-col">
             <div className="flex items-center gap-2">
-              <span className="font-extrabold text-lg sm:text-xl tracking-tight text-slate-100 font-sans">
-                Nexus<span className="text-emerald-400">Clear</span>
+              <span className="font-bold text-base sm:text-lg tracking-tight text-white font-sans">
+                Nexus<span className="text-[#8ab4f8]">Clear</span>
               </span>
-              <span className="hidden sm:inline-block rounded-md bg-emerald-500/15 px-1.5 py-0.5 text-[10px] font-bold text-emerald-400 border border-emerald-500/30 uppercase tracking-widest">
+              <span className="rounded-full bg-[#1e232d] px-2 py-0.5 text-[10px] font-medium text-[#8ab4f8] border border-[#3c4048]">
                 Pramaan-AI
               </span>
             </div>
-            <span className="text-[11px] text-slate-400 font-medium hidden md:block">
-              Lien Resolution &amp; CLS Engine
+            <span className="text-[10.5px] text-[#9aa0a6] hidden md:block">
+              Google Cloud AI Builder Cup 2026 &bull; Gemini 2.5 Flash
             </span>
           </div>
         </div>
 
         {/* ========================================== */}
-        {/* CENTER: View Mode Tabs                     */}
+        {/* CENTER: Material 3 Segmented Button       */}
         {/* ========================================== */}
-        <div className="hidden md:flex items-center rounded-xl bg-slate-950/80 p-1 border border-slate-800 shadow-inner">
+        <div className="hidden sm:flex items-center rounded-full bg-[#191c20] p-1 border border-[#2d3036]">
           {viewTabs.map((tab) => {
             const Icon = tab.icon;
             const isActive = currentView === tab.id;
@@ -112,14 +110,13 @@ export const TopNavBar: React.FC = () => {
               <button
                 key={tab.id}
                 onClick={() => setView(tab.id)}
-                className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all duration-200 cursor-pointer ${
+                className={`flex items-center gap-1.5 px-3.5 py-1.5 rounded-full text-xs font-medium transition-all cursor-pointer ${
                   isActive
-                    ? 'bg-gradient-to-r from-emerald-600/25 to-emerald-500/20 text-emerald-300 border border-emerald-500/40 shadow-sm'
-                    : 'text-slate-400 hover:text-slate-200 hover:bg-slate-800/60 border border-transparent'
+                    ? 'bg-[#004a77] text-[#d1e4ff] font-semibold shadow-sm'
+                    : 'text-[#c4c6d0] hover:text-white hover:bg-[#272a2f]'
                 }`}
-                title={`Switch to ${tab.label}`}
               >
-                <Icon className={`h-3.5 w-3.5 ${isActive ? 'text-emerald-400' : 'text-slate-400'}`} />
+                <Icon className="h-3.5 w-3.5" />
                 <span>{tab.label}</span>
               </button>
             );
@@ -127,73 +124,65 @@ export const TopNavBar: React.FC = () => {
         </div>
 
         {/* ========================================== */}
-        {/* RIGHT: Controls, Switcher & API Status     */}
+        {/* RIGHT: Material 3 Dropdowns & Status Badge */}
         {/* ========================================== */}
-        <div className="flex items-center gap-2 sm:gap-3 shrink-0">
-
-          {/* Quick Scenario Picker Dropdown */}
+        <div className="flex items-center gap-2">
+          
+          {/* Quick Scenario Selector Dropdown */}
           <div className="relative" ref={scenarioRef}>
             <button
               onClick={() => setScenarioDropdownOpen(!scenarioDropdownOpen)}
-              disabled={isProcessing}
-              className="flex items-center gap-1.5 rounded-lg bg-slate-800/70 hover:bg-slate-800 px-2.5 py-1.5 text-xs font-medium text-slate-300 border border-slate-700/60 hover:border-slate-600 transition-all cursor-pointer disabled:opacity-50"
-              title="Select Demo Scenario"
+              className="flex items-center gap-1.5 rounded-full bg-[#191c20] hover:bg-[#272a2f] px-3 py-1.5 text-xs font-medium text-[#e2e2e9] border border-[#2d3036] transition-all cursor-pointer"
+              title="Select Demo Case"
             >
-              <Sliders className="h-3.5 w-3.5 text-slate-400" />
-              <span className="hidden xl:inline max-w-[120px] truncate">
-                {currentScenario?.name || 'Scenarios'}
+              <SlidersHorizontal className="h-3.5 w-3.5 text-[#8ab4f8]" />
+              <span className="max-w-[110px] truncate hidden md:inline">
+                {currentScenario?.name.split(' ')[0] ?? 'Cases'}
               </span>
-              <span className="xl:hidden">Demo</span>
-              <ChevronDown className={`h-3 w-3 text-slate-400 transition-transform ${scenarioDropdownOpen ? 'rotate-180' : ''}`} />
+              <ChevronDown
+                className={`h-3 w-3 text-[#9aa0a6] transition-transform duration-200 ${
+                  scenarioDropdownOpen ? 'rotate-180' : ''
+                }`}
+              />
             </button>
 
             {scenarioDropdownOpen && (
-              <div className="absolute right-0 mt-2 w-80 rounded-xl bg-slate-900 border border-slate-700/80 shadow-2xl z-50 p-1.5 backdrop-blur-xl">
-                <div className="px-3 py-2 border-b border-slate-800">
-                  <p className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">
-                    Select Test Scenario
-                  </p>
+              <div className="absolute right-0 mt-2 w-80 rounded-2xl bg-[#1d2024] border border-[#3c4048] shadow-2xl z-50 p-2 backdrop-blur-xl">
+                <div className="px-3 py-1.5 border-b border-[#2d3036] text-[11px] font-medium text-[#9aa0a6]">
+                  Select Preloaded Case
                 </div>
                 <div className="py-1 space-y-1">
                   {DEMO_SCENARIOS.map((scenario) => {
                     const isSelected = currentScenario?.id === scenario.id;
-                    const isMule = scenario.expectedCLS.riskLevel === 'critical';
+                    const isMule = scenario.id === 'rajesh-trading';
                     return (
                       <button
                         key={scenario.id}
                         onClick={() => handleSelectScenario(scenario)}
-                        className={`w-full text-left p-2.5 rounded-lg text-xs transition-colors flex items-start gap-2.5 cursor-pointer ${
+                        className={`w-full text-left p-2.5 rounded-xl text-xs transition-colors flex items-center justify-between cursor-pointer ${
                           isSelected
-                            ? 'bg-emerald-500/15 border border-emerald-500/30 text-emerald-200'
-                            : 'hover:bg-slate-800/80 text-slate-300'
+                            ? 'bg-[#004a77] text-[#d1e4ff]'
+                            : 'hover:bg-[#272a2f] text-[#c4c6d0]'
                         }`}
                       >
-                        <div className="mt-0.5 shrink-0">
-                          {isSelected ? (
-                            <Check className="h-4 w-4 text-emerald-400" />
-                          ) : (
-                            <div className="h-4 w-4 rounded-full border border-slate-600" />
-                          )}
-                        </div>
-                        <div className="min-w-0 flex-1">
-                          <div className="flex items-center justify-between gap-1">
-                            <span className="font-semibold text-slate-200 truncate">
-                              {scenario.name}
-                            </span>
-                            <span
-                              className={`shrink-0 px-1.5 py-0.2 rounded text-[10px] font-mono font-bold ${
-                                isMule
-                                  ? 'bg-red-500/20 text-red-400 border border-red-500/30'
-                                  : 'bg-emerald-500/20 text-emerald-400 border border-emerald-500/30'
-                              }`}
-                            >
-                              {formatCurrency(scenario.transaction.amount, scenario.jurisdiction)}
-                            </span>
+                        <div className="truncate pr-2">
+                          <div className="font-semibold text-white truncate flex items-center gap-1.5">
+                            <span>{scenario.id === 'ramesh-medicals' ? '🏥' : scenario.id === 'uncle-tan-chicken-rice' ? '🍗' : '🚩'}</span>
+                            <span>{scenario.name}</span>
                           </div>
-                          <p className="text-[11px] text-slate-400 line-clamp-1 mt-0.5">
+                          <span className="text-[10.5px] text-[#9aa0a6] line-clamp-1">
                             {scenario.description}
-                          </p>
+                          </span>
                         </div>
+                        <span
+                          className={`shrink-0 px-2 py-0.5 rounded-full text-[10px] font-mono font-bold ${
+                            isMule
+                              ? 'bg-rose-500/20 text-[#f28b82]'
+                              : 'bg-emerald-500/20 text-[#81c995]'
+                          }`}
+                        >
+                          {formatCurrency(scenario.transaction.amount, scenario.jurisdiction)}
+                        </span>
                       </button>
                     );
                   })}
@@ -202,31 +191,28 @@ export const TopNavBar: React.FC = () => {
             )}
           </div>
 
-          {/* 1. Jurisdiction Switcher Dropdown */}
+          {/* Jurisdiction Selector Dropdown */}
           <div className="relative" ref={jurisdictionRef}>
             <button
               onClick={() => setJurisdictionDropdownOpen(!jurisdictionDropdownOpen)}
-              className="flex items-center gap-2 rounded-lg bg-slate-800/80 hover:bg-slate-800 px-2.5 py-1.5 text-xs font-semibold text-slate-200 border border-slate-700/70 hover:border-slate-600 transition-all cursor-pointer"
+              className="flex items-center gap-1.5 rounded-full bg-[#191c20] hover:bg-[#272a2f] px-3 py-1.5 text-xs font-medium text-[#e2e2e9] border border-[#2d3036] transition-all cursor-pointer"
               title="Select Jurisdiction"
             >
-              <span className="text-base leading-none">{activeJurisdictionConfig.flag}</span>
-              <span className="hidden lg:inline text-slate-200">
+              <span>{activeJurisdictionConfig.flag}</span>
+              <span className="hidden lg:inline">
                 {activeJurisdictionConfig.name.split(' ')[0]}
               </span>
               <ChevronDown
-                className={`h-3.5 w-3.5 text-slate-400 transition-transform duration-200 ${
+                className={`h-3 w-3 text-[#9aa0a6] transition-transform duration-200 ${
                   jurisdictionDropdownOpen ? 'rotate-180' : ''
                 }`}
               />
             </button>
 
             {jurisdictionDropdownOpen && (
-              <div className="absolute right-0 mt-2 w-72 rounded-xl bg-slate-900 border border-slate-700/80 shadow-2xl z-50 p-1.5 backdrop-blur-xl animate-fade-in">
-                <div className="px-3 py-2 border-b border-slate-800 flex items-center justify-between">
-                  <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider">
-                    Select Jurisdiction
-                  </span>
-                  <Globe className="h-3.5 w-3.5 text-slate-500" />
+              <div className="absolute right-0 mt-2 w-72 rounded-2xl bg-[#1d2024] border border-[#3c4048] shadow-2xl z-50 p-2 backdrop-blur-xl">
+                <div className="px-3 py-1.5 border-b border-[#2d3036] text-[11px] font-medium text-[#9aa0a6]">
+                  Regulatory Rail
                 </div>
                 <div className="py-1 space-y-1">
                   {JURISDICTION_LIST.map((j) => {
@@ -235,20 +221,20 @@ export const TopNavBar: React.FC = () => {
                       <button
                         key={j.id}
                         onClick={() => handleSelectJurisdiction(j.id)}
-                        className={`w-full text-left p-2.5 rounded-lg text-xs transition-colors flex items-center justify-between cursor-pointer ${
+                        className={`w-full text-left p-2.5 rounded-xl text-xs transition-colors flex items-center justify-between cursor-pointer ${
                           isSelected
-                            ? 'bg-emerald-500/15 border border-emerald-500/30 text-emerald-200'
-                            : 'hover:bg-slate-800/80 text-slate-300'
+                            ? 'bg-[#004a77] text-[#d1e4ff]'
+                            : 'hover:bg-[#272a2f] text-[#c4c6d0]'
                         }`}
                       >
-                        <div className="flex items-center gap-2.5">
-                          <span className="text-xl leading-none">{j.flag}</span>
+                        <div className="flex items-center gap-2">
+                          <span className="text-base">{j.flag}</span>
                           <div>
-                            <p className="font-semibold text-slate-100">{j.name}</p>
-                            <p className="text-[10px] text-slate-400">{j.framework}</p>
+                            <div className="font-semibold text-white">{j.name}</div>
+                            <div className="text-[10px] text-[#9aa0a6]">{j.framework}</div>
                           </div>
                         </div>
-                        {isSelected && <Check className="h-4 w-4 text-emerald-400 shrink-0" />}
+                        {isSelected && <Check className="h-4 w-4 text-[#8ab4f8]" />}
                       </button>
                     );
                   })}
@@ -257,46 +243,35 @@ export const TopNavBar: React.FC = () => {
             )}
           </div>
 
-          {/* 2. API Status Badge */}
+          {/* Gemini 2.5 Flash Status Badge */}
           <button
             onClick={() => toggleApiKeyModal(true)}
-            className={`flex items-center gap-2 rounded-lg px-2.5 py-1.5 text-xs font-medium transition-all duration-200 border cursor-pointer ${
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium border transition-all cursor-pointer ${
               isLiveGemini
-                ? 'bg-emerald-500/10 border-emerald-500/40 text-emerald-300 hover:bg-emerald-500/20 shadow-[0_0_12px_rgba(16,185,129,0.15)]'
-                : 'bg-amber-500/10 border-amber-500/40 text-amber-300 hover:bg-amber-500/20 shadow-[0_0_12px_rgba(245,158,11,0.15)]'
+                ? 'bg-[#00522b] text-[#c4eed0] border-[#81c995]'
+                : 'bg-[#574500] text-[#ffdf99] border-[#fdd663]'
             }`}
-            title={
-              isLiveGemini
-                ? 'Gemini 2.5 Flash live API active. Click to manage key.'
-                : 'Running in synthetic Simulator Mode. Click to enter API key.'
-            }
+            title="Click to configure Gemini API Key"
           >
-            <span className="relative flex h-2 w-2">
-              <span
-                className={`absolute inline-flex h-full w-full rounded-full opacity-75 animate-ping ${
-                  isLiveGemini ? 'bg-emerald-400' : 'bg-amber-400'
-                }`}
-              />
-              <span
-                className={`relative inline-flex rounded-full h-2 w-2 ${
-                  isLiveGemini ? 'bg-emerald-500' : 'bg-amber-500'
-                }`}
-              />
+            <span
+              className={`h-2 w-2 rounded-full ${
+                isLiveGemini ? 'bg-[#81c995] animate-pulse' : 'bg-[#fdd663]'
+              }`}
+            />
+            <span className="hidden sm:inline font-sans">
+              {isLiveGemini ? 'Gemini 2.5 Flash' : 'Simulator Mode'}
             </span>
-            <span className="hidden sm:inline font-mono font-semibold">
-              {isLiveGemini ? 'Live Gemini 2.5 Flash' : 'Simulator Mode'}
-            </span>
-            <Zap className={`h-3 w-3 ${isLiveGemini ? 'text-emerald-400' : 'text-amber-400'}`} />
+            <Zap className="h-3 w-3" />
           </button>
 
-          {/* 3. Settings Gear Button */}
+          {/* Settings Icon Button */}
           <button
             onClick={() => toggleApiKeyModal(true)}
-            className="flex h-8 w-8 items-center justify-center rounded-lg bg-slate-800/80 hover:bg-slate-700/80 text-slate-300 hover:text-white border border-slate-700/70 transition-all cursor-pointer"
-            title="API Key &amp; System Settings"
+            className="flex h-8 w-8 items-center justify-center rounded-full bg-[#191c20] hover:bg-[#272a2f] text-[#c4c6d0] hover:text-white border border-[#2d3036] transition-all cursor-pointer"
+            title="API Key Settings"
             aria-label="Settings"
           >
-            <Settings className="h-4 w-4 hover:rotate-90 transition-transform duration-300" />
+            <Settings className="h-4 w-4" />
           </button>
 
         </div>
