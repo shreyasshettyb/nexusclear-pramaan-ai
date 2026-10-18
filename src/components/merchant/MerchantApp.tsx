@@ -481,7 +481,7 @@ export const MerchantApp: React.FC<MerchantAppProps> = ({
           </div>
 
           {/* Minimal Subtle Waveform */}
-          <div className="h-7 w-full overflow-hidden rounded-lg bg-[#131314] px-2 py-1">
+          <div className="w-full overflow-hidden rounded-lg bg-[#131314] px-2 py-1">
             <WaveformVisualizer
               waveformData={isRecording ? liveWaveform : syntheticWaveform}
               isActive={isRecording || isPlayingAudio}
