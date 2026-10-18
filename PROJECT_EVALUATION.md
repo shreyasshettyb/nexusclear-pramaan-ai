@@ -8,6 +8,11 @@
 
 ---
 
+## 🚀 Quick Links for Judges
+- **🌐 Live Deployed Prototype (Firebase Hosting):** [Launch NexusClear Web App](https://nexusclear.web.app)
+- **🎥 3-Minute Demo Video:** [Watch on YouTube / Loom](https://youtu.be/YOUR-VIDEO-LINK)
+- **🔑 Testing Live Gemini 2.5 Flash:** Works 100% out-of-the-box in instant Simulator Mode. To test live Google AI calls, click the **⚙️ Settings** icon in the top navbar and paste any free Google AI Studio API key.
+
 ## 📑 Table of Contents
 1. [Executive Summary & Problem Statement](#1-executive-summary--problem-statement)
 2. [Regulatory Grounding & Statutory Compliance](#2-regulatory-grounding--statutory-compliance)
