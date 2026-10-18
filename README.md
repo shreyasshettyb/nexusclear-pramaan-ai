@@ -322,5 +322,3 @@ nexusclear-pramaan-ai/
 
 ---
 
-*Authored for the Google Cloud AI Builder Cup 2026 Evaluation Panel.*  
-*NexusClear (Pramaan-AI) — Unblocking honest commerce, one second at a time.*
