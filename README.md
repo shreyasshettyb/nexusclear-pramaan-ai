@@ -63,51 +63,8 @@ NexusClear is not a conceptual toy; it is purpose-built to comply with three spe
 
 NexusClear is engineered on a **100% Free, Zero-Billing Google Stack**:
 
-```mermaid
-flowchart TD
-    subgraph Client["Client-Side Workspace (React + Vite + TypeScript)"]
-        TopNav["Top Navigation Bar (Regime, Case & AI Toggle)"]
-        Split["Dual-View Split Screen (50/50 Workspace)"]
-        
-        subgraph MerchantPanel["Left: Merchant Mobile Portal"]
-            Lang["Language Switcher (ಕನ್ನಡ / English / हिन्दी)"]
-            Cases["1-Click Demo Scenarios"]
-            Hero["Debit Hold Hero & Status Banner"]
-            Voice["Vernacular Voice Note (Web Audio API)"]
-            Docs["Receipt & Premises OCR Preview"]
-            Submit["Submit Proof Button"]
-        end
-        
-        subgraph BankPanel["Right: Bank Compliance Command Center"]
-            Header["Case Summary & SLA Countdown Timer"]
-            Gauge["Commercial Legitimacy Score Gauge (0-900)"]
-            Inspector["Multimodal Fact Comparison (Gemini vs Ledger)"]
-            Hop["Transaction Hop-Chain Visualizer"]
-            Graph["6-Month Volumetric History Graph"]
-            Action["Human Officer Adjudication Console"]
-        end
-    end
+<img width="980" height="267" alt="image" src="https://github.com/user-attachments/assets/807f8796-1e24-420f-ba1e-bc86242759b4" />
 
-    subgraph AIService["AI & Evidence Service Layer"]
-        GeminiService["geminiService.ts (@google/genai SDK)"]
-        SyntheticEngine["syntheticReceiptGenerator.ts (Canvas API)"]
-        AudioService["audioService.ts (MediaRecorder + Waveform)"]
-        ScoringEngine["clsScoringEngine.ts (Mathematical Scoring)"]
-    end
-
-    subgraph External["Google Cloud Services (Free Tier)"]
-        GeminiFlash["Google Gemini 2.5 Flash API (AI Studio Free Tier)"]
-        Firestore["Firebase Firestore (Spark Plan Free) / Local Sync Fallback"]
-    end
-
-    MerchantPanel -->|Submit Evidence| GeminiService
-    GeminiService -->|Multimodal Prompt + Base64 PNG| GeminiFlash
-    GeminiFlash -->|Structured JSON Output| GeminiService
-    GeminiService -->|GeminiAuditResult| ScoringEngine
-    ScoringEngine -->|CLS Composite Score (0-900)| BankPanel
-    Action -->|Real-Time Broadcast| MerchantPanel
-    Action -->|Sync State| Firestore
-```
 
 ### 3.1 Technology Stack Details
 - **Frontend Core:** Vite 8.3, React 19, TypeScript 5.9, Tailwind CSS v4.
