@@ -1,6 +1,7 @@
 # 🎬 NexusClear (Pramaan-AI) — Official 3-to-4 Minute Video Demo Script
 
 > **Competition:** Google Cloud AI Builder Cup 2026 (BFSI Theme)  
+> **Team:** Team Dot • **Team Leader:** Akash  
 > **Strict Duration:** 3 minutes 15 seconds to 3 minutes 45 seconds (Target: ~3:30)  
 > **Live Web App to Record:** [https://nexusclear.web.app](https://nexusclear.web.app)  
 > **Recording Setup:** 1080p full-screen browser window, microphone tested, quiet room.

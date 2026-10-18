@@ -14,15 +14,15 @@
 ### 🟢 SLIDE 1: Team & Project Overview
 
 - **Slide Header:** Google Cloud AI Builder Cup 2026 (BFSI Theme)
-- **Team Name:** Team NexusClear
-- **Team Leader Name:** Shreyas Shetty B
+- **Team Name:** Team Dot
+- **Team Leader Name:** Akash
 - **Project Title:** NexusClear (Pramaan-AI)
 - **Tagline:** The Real-Time Payment Chain-Freeze Unblocker & Commercial Legitimacy Engine
 - **Target Problem Statement:**
   > Resolving automated debit-hold freezes on innocent downstream retail merchants caught in cyber-fraud lien cascades (compliant with RBI's September 2026 Draft KYC Directions, Singapore MAS/SPF Shared Responsibility Framework, and BIS Project Nexus).
 
 > **🎙️ Speaker Notes (15s):**  
-> "Good day judges. We are Team NexusClear, presenting Pramaan-AI — our solution to one of the most critical collateral damage crises in digital payments across India and Singapore: innocent micro-merchants having their bank accounts frozen for weeks due to multi-hop cyber-fraud lien cascades."
+> "Good day judges. We are Team Dot, presenting NexusClear (Pramaan-AI) — our solution to one of the most critical collateral damage crises in digital payments across India and Singapore: innocent micro-merchants having their bank accounts frozen for weeks due to multi-hop cyber-fraud lien cascades."
 
 ---
 
@@ -296,4 +296,4 @@ flowchart TD
 - **NexusClear (Pramaan-AI)**
 - *Unblocking honest commerce, one second at a time.*
 - **Build in JAPAC. Build for the world.**
-- **Contact:** Shreyas Shetty B • [GitHub Profile](https://github.com/shreyasshettyb)
+- **Team:** Team Dot • **Leader:** Akash

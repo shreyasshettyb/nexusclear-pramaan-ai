@@ -4,6 +4,7 @@
 > **Target Problem:** Real-Time Payment Chain-Freeze Resolution & Commercial Legitimacy Engine  
 > **Core AI:** Google Gemini 2.5 Flash (`@google/genai` Multimodal Vision + Vernacular Audio NLP)  
 > **Deployment Constraint:** 100% Free Google Stack ($0.00 / No Credit Card Required)  
+> **Team:** Team Dot • **Team Leader:** Akash  
 > **Repository:** `AIBuilderCup` • Single-Repo Vite + React + TypeScript + Tailwind CSS
 
 ---
