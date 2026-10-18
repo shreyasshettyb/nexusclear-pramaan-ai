@@ -164,9 +164,9 @@ export const SCENARIO_STATEMENTS: Record<string, Record<MerchantLanguage, string
     en: 'Sir, customer bought baby food (Lactogen-2) and Amoxicillin 500mg for ₹1,450 at 4:15 PM. Here is my carbon-copy bill #409 and my medical shop counter photo. Please unfreeze my funds.',
   },
   'uncle-tan-chicken-rice': {
-    kn: 'ಗ್ರಾಹಕರು ಮಧ್ಯಾಹ್ನ 12:30 ಕ್ಕೆ ಕಚೇರಿ ಊಟಕ್ಕಾಗಿ 10 ಪ್ಯಾಕೆಟ್ ಹುರಿದ ಚಿಕನ್ ರೈಸ್ ಆರ್ಡರ್ ಮಾಡಿದರು ($48.50). ಇದು ನನ್ನ Sunmi POS ಥರ್ಮಲ್ ರಸೀದಿ.',
-    hi: 'ग्राहक ने दोपहर 12:30 बजे ऑफिस लंच के लिए 10 पैकेट चिकन राइस ऑर्डर किए ($48.50)। यह मेरा POS थर्मल रसीद बिल है।',
-    en: 'Customer ordered 10 packets roasted chicken rice for office lunch at 12:30 PM, here is the POS thermal slip for S$48.50 paid via PayNow.',
+    kn: 'ಗ್ರಾಹಕರು ಮಧ್ಯಾಹ್ನ 12:30 ಕ್ಕೆ ಕಚೇರಿ ಊಟಕ್ಕಾಗಿ 10 ಪ್ಯಾಕೆಟ್ ಹುರಿದ ಚಿಕನ್ ರೈಸ್ ಆರ್ಡರ್ ಮಾಡಿದರು ($48.50 SGD). ಇದು ನನ್ನ Sunmi POS ಥರ್ಮಲ್ ರಸೀದಿ.',
+    hi: 'ग्राहक ने दोपहर 12:30 बजे ऑफिस लंच के लिए 10 पैकेट चिकन राइस ऑर्डर किए ($48.50 SGD)। यह मेरा POS थर्मल रसीद बिल है।',
+    en: 'Customer ordered 10 packets roasted chicken rice for office lunch at 12:30 PM, here is the POS thermal slip for $48.50 SGD paid via PayNow.',
   },
   'rajesh-trading': {
     kn: 'ನಾವು ಹಾರ್ಡ್‌ವೇರ್ ವ್ಯಾಪಾರ ಮಾಡುತ್ತೇವೆ. ₹48,000 ಹಣ ಬಂದಿತ್ತು. ಇದು ಮೂರು ವಾರಗಳ ಹಿಂದಿನ ₹12,000 ಹಾರ್ಡ್‌ವೇರ್ ಬಿಲ್.',

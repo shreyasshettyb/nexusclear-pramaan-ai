@@ -18,7 +18,7 @@ export const JURISDICTIONS: Record<Jurisdiction, JurisdictionConfig> = {
     name: 'Singapore (PayNow / FAST)',
     flag: '🇸🇬',
     currency: 'SGD',
-    currencySymbol: 'S$',
+    currencySymbol: '$',
     regulatoryBody: 'Monetary Authority of Singapore (MAS) / SPF',
     framework: 'Shared Responsibility Framework',
     slaCustomerDays: 14,
@@ -30,7 +30,7 @@ export const JURISDICTIONS: Record<Jurisdiction, JurisdictionConfig> = {
     name: 'Cross-Border (BIS Nexus)',
     flag: '🌐',
     currency: 'Multi',
-    currencySymbol: '₹/S$',
+    currencySymbol: '₹/$',
     regulatoryBody: 'Bank for International Settlements (BIS)',
     framework: 'Project Nexus Cross-Border Protocol',
     slaCustomerDays: 30,
@@ -54,7 +54,7 @@ export const formatCurrency = (amount: number, jurisdiction: Jurisdiction): stri
   if (jurisdiction === 'india') {
     return `${config.currencySymbol}${amount.toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
   } else if (jurisdiction === 'singapore') {
-    return `${config.currencySymbol}${amount.toLocaleString('en-SG', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+    return `$${amount.toLocaleString('en-SG', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} SGD`;
   } else {
     return `${config.currencySymbol}${amount.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
   }

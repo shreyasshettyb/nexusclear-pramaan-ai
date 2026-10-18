@@ -296,7 +296,7 @@ export async function simulateGeminiAudit(
   if (isHawkerStall) {
     return {
       vernacular_translation:
-        'Office corporate worker bought 10 packets of roasted chicken rice for team lunch at 12:30 PM. Paid S$48.50 via PayNow QR on the stall counter. Here is the POS thermal paper ticket.',
+        'Office corporate worker bought 10 packets of roasted chicken rice for team lunch at 12:30 PM. Paid $48.50 SGD via PayNow QR on the stall counter. Here is the POS thermal paper ticket.',
       extracted_receipt_amount: transaction.amount || 48.5,
       extracted_receipt_time: '2026-10-15 12:31:05 SGT',
       amount_match_boolean: true,

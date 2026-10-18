@@ -163,7 +163,7 @@ flowchart LR
 
     subgraph Scenario2["Scenario 2: Innocent Hawker (Uncle Tan)"]
         direction TB
-        S2_Txn["Flagged S$48.50 • Layer-2 PayNow Hold"]
+        S2_Txn["Flagged $48.50 SGD • Layer-2 PayNow Hold"]
         S2_Proof["Thermal POS Slip (10x Chicken Rice) + Singlish Audio"]
         S2_Score["CLS Score: 882 / 900 (Verified Merchant)"]
         S2_Action["Result: MAS-SPF SRF Clearance Certificate"]
@@ -191,10 +191,10 @@ flowchart LR
 - **Statutory Decision:** **Approve & Lift Hold**. Unblocks merchant immediately under RBI Rule 14(b).
 
 ### Scenario 2: 🍗 Innocent Singapore Hawker Stall (Uncle Tan Hainanese Chicken Rice)
-- **Incident Context:** Maxwell Food Centre stall received a **S$48.50** PayNow corporate catering order for 10 lunch packets. The customer's account was flagged in an SPF Anti-Scam cascade.
+- **Incident Context:** Maxwell Food Centre stall received a **$48.50 SGD** PayNow corporate catering order for 10 lunch packets. The customer's account was flagged in an SPF Anti-Scam cascade.
 - **Merchant Evidence:**
   - Vernacular Explanation (Singlish): *"Customer ordered 10 packets roasted chicken rice for office lunch at 12:30 PM, here is the POS thermal slip."*
-  - Receipt: Thermal POS printout #MFC-20261015-0847 (S$48.50 with 9% GST included).
+  - Receipt: Thermal POS printout #MFC-20261015-0847 ($48.50 SGD with 9% GST included).
 - **CLS Outcome:** **882 / 900** (Velocity: 282, Gemini Multimodal: 350, Livelihood: 250).
 - **Statutory Decision:** **Approve & Lift Hold**. Generates MAS Shared Responsibility Framework compliance dossier.
 

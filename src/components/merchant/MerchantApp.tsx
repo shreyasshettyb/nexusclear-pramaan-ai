@@ -416,6 +416,11 @@ export const MerchantApp: React.FC<MerchantAppProps> = ({
                 placeholder="Amount"
                 title="Edit amount to test amount match or mismatch with custom receipt"
               />
+              {currentJurisdiction === 'singapore' && (
+                <span className="text-sm font-semibold font-mono text-[#8ab4f8]">
+                  SGD
+                </span>
+              )}
               {isCustomMode && (
                 <span className="text-[10px] font-medium text-[#8ab4f8] bg-[#1b3a5b] px-2 py-0.5 rounded-full">
                   Custom Mode

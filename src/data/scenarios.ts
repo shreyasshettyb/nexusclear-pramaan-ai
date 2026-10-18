@@ -183,7 +183,7 @@ const uncleTanReceiptSvg = createSvgDataUrl(`
   <line x1="20" y1="362" x2="360" y2="362" stroke="#0f172a" stroke-width="2" />
   
   <text x="24" y="392" font-family="'Courier New', monospace" font-size="18" font-weight="bold" fill="#059669">TOTAL (SGD):</text>
-  <text x="356" y="392" font-family="'Courier New', monospace" font-size="20" font-weight="bold" fill="#059669" text-anchor="end">S$48.50</text>
+  <text x="356" y="392" font-family="'Courier New', monospace" font-size="20" font-weight="bold" fill="#059669" text-anchor="end">$48.50 SGD</text>
   
   <!-- PayNow details -->
   <rect x="20" y="416" width="340" height="66" fill="#f1f5f9" rx="4" />
@@ -507,7 +507,7 @@ export const DEMO_SCENARIOS: DemoScenario[] = [
       receiptImage: uncleTanReceiptSvg,
       shopPhoto: uncleTanShopSvg,
       additionalNotes:
-        'NEA licensed hawker stall for 22 years at Maxwell Food Centre. ACRA business registration active. Daily turnover ~S$950 across 160+ micro-transactions. Zero prior fraud, AML, or consumer dispute history.',
+        'NEA licensed hawker stall for 22 years at Maxwell Food Centre. ACRA business registration active. Daily turnover ~$950 SGD across 160+ micro-transactions. Zero prior fraud, AML, or consumer dispute history.',
       uploadedAt: '2026-10-16T14:20:00+08:00',
     },
     expectedCLS: {
@@ -519,7 +519,7 @@ export const DEMO_SCENARIOS: DemoScenario[] = [
       recommendation: 'lift_hold',
       details: {
         fanInDiversity: '98% (High diversity: 150+ unique diners scanning SGQR daily)',
-        dailyTicketConsistency: '99% (Average transaction S$4.50 - S$65.00 catering)',
+        dailyTicketConsistency: '99% (Average transaction $4.50 - $65.00 SGD catering)',
         holdingDuration: 'Terminal consumer purchase (Zero onward hops / immediate settlement)',
         inventoryConsistency: '97% (Thermal chit line items correspond to Maxwell stall menu)',
         billSequenceIntegrity: 'POS receipt #088 matches Sunmi thermal hardware journal',
@@ -528,7 +528,7 @@ export const DEMO_SCENARIOS: DemoScenario[] = [
     },
     expectedGeminiResult: {
       vernacular_translation:
-        'Singlish statement translated: Hawkers operating for 22 years at Maxwell FC Stall #28. Order was for 10 boxes steamed chicken rice plus sides for an office worker during peak lunch at 12:34 PM. Total S$48.50 paid via SGQR PayNow. Fresh poultry supplier payment pending on delivery tomorrow.',
+        'Singlish statement translated: Hawkers operating for 22 years at Maxwell FC Stall #28. Order was for 10 boxes steamed chicken rice plus sides for an office worker during peak lunch at 12:34 PM. Total $48.50 SGD paid via SGQR PayNow. Fresh poultry supplier payment pending on delivery tomorrow.',
       extracted_receipt_amount: 48.5,
       extracted_receipt_time: '2026-10-16T12:34:48+08:00',
       amount_match_boolean: true,
